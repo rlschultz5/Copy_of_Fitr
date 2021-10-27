@@ -5,7 +5,7 @@ const db = {};
 db.mongoose = mongoose;
 
 db.user = require("./user.model");
-db.SCHOOLYEAR = ["freshman", "sophomore", "junior", "senior", "graduate", "professor"]
+db.schoolYear = require("./schoolYear.model")
 db.workout = require("./workout.model");
 db.activity = require("./activity.model");
 db.experience = require("./experience.model");
