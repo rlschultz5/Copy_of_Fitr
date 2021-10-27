@@ -9,9 +9,8 @@ const Workout = mongoose.model(
             ref: "Activity"
         },
         location: String,
-        minPeople: Number,
-        maxPeople: Number,
-        length: Number,
+        minPeople: {type: Number, required: true},
+        maxPeople: {type: Number, required: true},
         date: Date,
         experienceLevel: {
             type: mongoose.Schema.Types.String,
