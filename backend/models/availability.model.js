@@ -5,9 +5,10 @@ const Availability = mongoose.model(
     new mongoose.Schema({
         user_id: {
             type: mongoose.Schema.Types.ObjectID,
-            ref: "User"
+            ref: "User",
+            required: true
         },
-        day: String,
-        availability: Array
+        day: {type: String, required: true},
+        availability: {type: Array, required: true}
     })
 )

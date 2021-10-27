@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const SchoolYear = mongoose.model(
     "SchoolYear",
     new mongoose.Schema({
-        year: String
+        year: {type: String, unique: true}
     })
 );
 
