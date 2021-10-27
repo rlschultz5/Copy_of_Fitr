@@ -13,5 +13,6 @@ db.workoutLength = require("./workoutLength.model");
 db.admin = require("./admin.model");
 db.availability = require("./availability.model");
 db.userWorkout = require("./userWorkout.model");
+db.exercise = require("./exercise.model");
 
 module.exports = db;

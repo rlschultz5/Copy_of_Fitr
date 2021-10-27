@@ -7,8 +7,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
 const db = require("./models")
-let WorkoutLength = db.workoutLength;
 
+let WorkoutLength = db.workoutLength;
+let Experience = db.experience;
+let Exercise = db.exercise;
 
 
 db.mongoose.connect(dbConfig.CONNECTION_STRING, {
@@ -86,9 +88,291 @@ dbInitialize = async () => {
     catch (err) {
         console.log("error", err);
     }
+
   }
 })
+
+  Experience.estimatedDocumentCount( async (err, count) => {
+    if (!err && count === 0) {
+      try {
+        let experience = await new Experience({
+          level: "casual"
+        })
+        await experience.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let experience = await new Experience({
+          level: "intermediate"
+        })
+        await experience.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let experience = await new Experience({
+          level: "competitive"
+        })
+        await experience.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+    }
+  });
+
+  Exercise.estimatedDocumentCount( async (err, count) => {
+    if (!err && count === 0) {
+      try {
+        let exercise = await new Exercise({
+          name: "weightlifting"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "yoga"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "pilates"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "cycling"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "walking"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "jogging"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "flag football"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "soccer"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "basketball"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "golf"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "ultimate frisbee"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "disc golf"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "volleyball"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "spike ball"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "boxing"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "kickboxing"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "kayaking"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "canoeing"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "swimming"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "fishing"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "hockey"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "gaming-shooter"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "gaming-lifestyle"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+
+      try {
+        let exercise = await new Exercise({
+          name: "gaming-sports"
+        })
+        await exercise.save();
+      }
+      catch (err) {
+          console.log("error", err);
+      }
+      
+    }
+  })
+
 }
+
 
 
 app.get("/", (req, res) => {
