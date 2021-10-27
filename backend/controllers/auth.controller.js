@@ -7,6 +7,17 @@ exports.signup = async (req, res) => {
         if (checkUser.length) {
             res.status(500).send({error: "Account exists with provided username"});
         }
+        let userObj = {
+            username: req.query.username,
+            password: req.query.password,
+            name: req.query.name,
+            email: req.query.email,
+            city: req.query.city,
+            state: req.query.state,
+            zipCode: req.query.zipCode,
+            schoolYear: req.query.schoolYear
+        }
+
     } catch (err) {
         console.log(err);
         res.status(500).send({error: err.message})
