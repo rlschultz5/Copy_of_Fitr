@@ -12,10 +12,16 @@ const User = mongoose.model(
     zipCode: Number,
     schoolYear: {
       type: mongoose.Schema.Types.String,
-      ref: "SCHOOLYEAR"
+      ref: "SchoolYear"
     },
     activities: Array,
-    //preferences: userPreferences,
+    preferences: {
+      activitiesExperience : Array,
+      timeAvailability: {
+        type: mongoose.Schema.Types.ObjectID,
+        ref: "Availability"
+      }
+    },
     isAdmin: Boolean
   })
 );
