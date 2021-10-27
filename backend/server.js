@@ -8,6 +8,8 @@ app.use(express.urlencoded({extended: true}))
 
 const db = require("./models")
 
+
+
 db.mongoose.connect(dbConfig.CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -22,7 +24,7 @@ db.mongoose.connect(dbConfig.CONNECTION_STRING, {
   });
 
 dbInitialize = () => {
-  
+
 }
 
 
