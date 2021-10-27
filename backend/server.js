@@ -7,6 +7,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
 const db = require("./models")
+let WorkoutLength = db.workoutLength;
 
 
 
@@ -23,8 +24,70 @@ db.mongoose.connect(dbConfig.CONNECTION_STRING, {
     process.exit();
   });
 
-dbInitialize = () => {
+dbInitialize = async () => {
+  //WorkoutLength.estimatedDocumentCount((err, count) => {
+  //if (!err && count === 0) {
+    try {
+      let workoutlength = await new WorkoutLength({
+        length: 30
+      })
+      await workoutlength.save();
+    }
+    catch (err) {
+        console.log("error", err);
+    }
 
+    new WorkoutLength({
+      length: 60
+    }).save(err => {
+      if (err) {
+        console.log("error", err);
+      }
+
+      console.log("added '60' to workoutlength collection");
+    });
+
+    new WorkoutLength({
+      length: 90
+    }).save(err => {
+      if (err) {
+        console.log("error", err);
+      }
+
+      console.log("added '90' to workoutlength collection");
+    });
+
+    new WorkoutLength({
+      length: 120
+    }).save(err => {
+      if (err) {
+        console.log("error", err);
+      }
+
+      console.log("added '120' to workoutlength collection");
+    });
+
+    new WorkoutLength({
+      length: 150
+    }).save(err => {
+      if (err) {
+        console.log("error", err);
+      }
+
+      console.log("added '150' to workoutlength collection");
+    });
+
+    new WorkoutLength({
+      length: 180
+    }).save(err => {
+      if (err) {
+        console.log("error", err);
+      }
+
+      console.log("added '180' to workoutlength collection");
+    });
+  //}
+//});
 }
 
 
