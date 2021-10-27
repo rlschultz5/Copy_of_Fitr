@@ -1,13 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState, } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { AuthContext } from './contexts/authContext';
+import AuthNavigator from "./navigators/authNavigator";
+import MainNavigator from "./navigators/mainNavigator";
+
 
 export default function App() {
+  const [isLoggedIn, setLoggedIn] = useState(true); //set this to false to simulate logged out state
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthContext.Provider value={setLoggedIn}>
+      {isLoggedIn}?
+        <MainNavigator/>
+        :
+        <AuthNavigator/>
+    </AuthContext.Provider>
+
   );
 }
 
