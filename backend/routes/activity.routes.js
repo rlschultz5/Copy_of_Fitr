@@ -1,4 +1,4 @@
-const activityController = require("./controllers/activity.controller");
+const activityController = require("../controllers/activity.controller");
 
 module.exports = (app) => {
     app.get("/api/activity/get", activityController.getActivity);

@@ -1,4 +1,4 @@
-const authController = require("./controllers/auth.controller");
+const authController = require("../controllers/auth.controller");
 
 module.exports = (app) => {
     app.post("/api/signup", authController.signUp);

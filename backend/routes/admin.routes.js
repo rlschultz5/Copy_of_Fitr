@@ -1,4 +1,4 @@
-const adminController = require("./controllers/admin.controller");
+const adminController = require("../controllers/admin.controller");
 
 module.exports = (app) => {
     app.post("/api/admin/add", adminController.addAdmin);
