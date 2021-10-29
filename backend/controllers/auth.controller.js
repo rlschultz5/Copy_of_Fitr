@@ -17,16 +17,16 @@ exports.signUp = async (req, res) => {
             zipCode: req.body.zipCode,
             schoolYear: req.body.schoolYear,
             activities: req.body.activies,
-            preferences: {
-                activitiesExperience: req.body.activitiesExperience
+            preferences: { // depends on format that front end sends request data
+                activitiesExperience: req.body.activitiesExperience 
             },
             isAdmin: req.body.isAdmin
         }
         let user = new User(userObj);
         await user.save();
-        let user_document = await user.findOne({username: req.body.username});
+        let user_document = await User.findOne({username: req.body.username});
         let userID = user_document._id;
-        console.log(user_id);
+        console.log(userID);
 
         // in the request, req.body.availability will be an array of all sessions user is available, with
         // below as an example
@@ -45,11 +45,29 @@ exports.signUp = async (req, res) => {
         console.log(err);
         res.status(500).send({error: err.message})
     }
-    res.send({message: "This is the signup method"});
 }
 
 exports.signIn = async (req, res) => {
-    res.send({message: "This is the signin method"});
+    try {
+        let user = await User.findOne({username: req.body.username});
+        if (!user) {
+            res.status(401).send({error: "Username not found"});
+        }
+        const password = user.password;
+        if (req.body.password !== password) {
+            res.status(401).send({error: "Invalid password provided"});
+        } else {
+            let response = {
+                message: "User signed in successfully",
+                data: user
+            }
+            console.log(response)
+            res.send(response);
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({error: err.message});
+    }
 }
 
 exports.forgotPassword = async (req, res) => {
@@ -57,5 +75,25 @@ exports.forgotPassword = async (req, res) => {
 }
 
 exports.deleteAccount = async (req, res) => {
-    res.send({message: "This is the delete account method"});
+    try {
+        let user = await User.findOne({username: req.body.username});
+        if (!user) {
+            res.status(401).send({error: "Username not found"});
+        }
+        const password = user.password;
+        if (req.body.password !== password) {
+            res.status(401).send({error: "Invalid password provided"});
+        } else {
+            let response = await User.deleteOne({username: req.body.username});
+            if (response.deletedCount === 1) {
+                res.send({message: `User ${user.username} deleted successfully`, data: response});
+            } else {
+                console.log(response);
+                res.status(500).send({message: "User was not successfully deleted"})
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({error: err.message});
+    }
 }
