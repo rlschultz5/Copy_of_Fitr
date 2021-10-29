@@ -373,7 +373,7 @@ dbInitialize = async () => {
 
 }
 
-
+require("./routes")
 
 app.get("/", (req, res) => {
     res.json({message: "Please give us an A :)"});

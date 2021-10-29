@@ -23,7 +23,10 @@ const Workout = mongoose.model(
             ref: "WorkoutLength",
             required: true
         },
-        creator: String // will update to User ref once user model created
+        creator: {
+            type: mongoose.Schema.Types.ObjectID,
+            ref: "User"
+        }
     })
 );
 
