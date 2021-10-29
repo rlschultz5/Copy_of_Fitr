@@ -377,6 +377,8 @@ require("./routes/auth.routes")(app);
 require("./routes/admin.routes")(app);
 require("./routes/activity.routes")(app);
 require("./routes/user.routes")(app);
+require("./routes/userWorkout.routes")(app);
+require("./routes/workout.routes")(app);
 
 
 app.get("/", (req, res) => {
