@@ -1,5 +1,6 @@
 const authController = require("./controllers/auth.controller");
 const userController = require("./controllers/user.controller");
+const adminController = require("./controllers/admin.controller");
 
 module.exports = (app) => {
     app.post("/api/signup", authController.signUp);
@@ -13,5 +14,10 @@ module.exports = (app) => {
     app.post("api/user/updateWorkoutPreferences", userController.updateWorkoutPref);
     app.get("api/user/getWorkouts", userController.getWorkouts);
     app.get("api/user/getCreatedWorkouts", userController.getCreatedWorkouts);
+
+    app.post("/api/admin/add", adminController.addAdmin);
+    app.get("/api/admin/get", adminController.getAdmin);
+    app.delete("/api/admin/remove", adminController.removeAdmin);
+    app.post("/api/admin/updateEmail", adminController.updateEmail);
     
 }
