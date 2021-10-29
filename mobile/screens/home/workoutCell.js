@@ -14,7 +14,7 @@ export default function WorkoutCell({data}) {
 
 const cellStyle = StyleSheet.create({
   container: {
-    flex: 1,
+    height: "15%",
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
