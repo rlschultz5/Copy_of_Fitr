@@ -1,15 +1,14 @@
-import { createAppContainer } from 'react-navigation';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/native-stack';
-
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import * as React from 'react';
 import HomeScreen from '../screens/home/homeScreen';
+import { NavigationContainer } from '@react-navigation/native';
 
-const Stack = createBottomTabNavigator();
+
+const Tab = createBottomTabNavigator();
 
 
-function AuthStack() {
+function MainNavigator() {
     return (
             <Tab.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
                 <Tab.Screen name="Home" component={HomeScreen} />
@@ -17,4 +16,4 @@ function AuthStack() {
     );
 }
 
-export default AuthStack;
+export default MainNavigator;
