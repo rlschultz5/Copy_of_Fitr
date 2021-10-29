@@ -1,7 +1,7 @@
 const db = require("../models");
 const User = db.user;
 
-exports.signup = async (req, res) => {
+exports.signUp = async (req, res) => {
     try {
         let checkUser = await User.find({username: req.body.username});
         if (checkUser.length) {
@@ -48,7 +48,7 @@ exports.signup = async (req, res) => {
     res.send({message: "This is the signup method"});
 }
 
-exports.signin = async (req, res) => {
+exports.signIn = async (req, res) => {
     res.send({message: "This is the signin method"});
 }
 
