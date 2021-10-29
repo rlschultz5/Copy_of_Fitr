@@ -51,3 +51,11 @@ exports.signup = async (req, res) => {
 exports.signin = async (req, res) => {
     res.send({message: "This is the signin method"});
 }
+
+exports.forgotPassword = async (req, res) => {
+    res.send({message: "This is the forgot password method"});
+}
+
+exports.deleteAccount = async (req, res) => {
+    res.send({message: "This is the delete account method"});
+}
