@@ -1,3 +1,6 @@
+const passport = require("passport")
+const connectEnsureLogin = require("connect-ensure-login")
+
 const db = require("../models");
 const User = db.user;
 
