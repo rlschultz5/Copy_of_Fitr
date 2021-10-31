@@ -1,5 +1,4 @@
-const express = require('express')
-const session = require('express-session')
+const express = require('express');
 const passport = require('passport')
 const dbConfig = require("./config/db.config")
 

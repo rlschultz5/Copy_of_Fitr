@@ -10,14 +10,17 @@ module.exports = (app) => {
         usernameField: "username",
         passwordField: "password",
         session: false
-    }, async  (username, password, done) => {
+    }, async (username, password, done) => {
             try {
                 let user = await User.findOne({username: username});
                 if (!user) {
                     return done(null, false, {message: "Username not found"});
                 }
-                if (!user.validPassword(password)) {
-                    return done(null, false, {message: "Incorrect password provided"});
+                else {
+                    const compare = await bcrypt.compare(password, user.password);
+                    if (!compare) {
+                        return done(null, false, {message: "Incorrect password provided"});
+                    }
                 }
                 return done(null, user, {message: "User signed in successfully"});
             } catch (err) {
@@ -37,9 +40,10 @@ module.exports = (app) => {
                 if (user) {
                     return done(null, false, {message: "Account exists with provided username"});
                 } else {
+                    const hashedPassword = await bcrypt.hash(password, 10);
                     let user = await new User({
                         username: username,
-                        password: password,
+                        password: hashedPassword,
                         name: req.body.name,
                         email: req.body.email,
                         city: req.body.city,
@@ -53,7 +57,6 @@ module.exports = (app) => {
                         isAdmin: req.body.isAdmin
                     });
                     await user.save();
-                    
                     return done(null, user);
                 }
                 
