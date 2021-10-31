@@ -6,8 +6,11 @@ const db = require("../models")
 const User = db.user;
 
 module.exports = (app) => {
-    passport.use("signin", new LocalStrategy(
-        async (username, password, done) => {
+    passport.use("signin", new LocalStrategy({
+        usernameField: "username",
+        passwordField: "password",
+        session: false
+    }, async  (username, password, done) => {
             try {
                 let user = await User.findOne({username: username});
                 if (!user) {
@@ -16,7 +19,7 @@ module.exports = (app) => {
                 if (!user.validPassword(password)) {
                     return done(null, false, {message: "Incorrect password provided"});
                 }
-                return done(null, user);
+                return done(null, user, {message: "User signed in successfully"});
             } catch (err) {
                 console.log(err);
                 return done(err);
@@ -24,8 +27,11 @@ module.exports = (app) => {
         }
     ))
     
-    passport.use("signup", new LocalStrategy(
-        async (username, password, done) => {
+    passport.use("signup", new LocalStrategy({
+        usernameField: "username",
+        passwordField: "password",
+        passReqToCallback: true
+    }, async (req, username, password, done) => {
             try {
                 let user = await User.findOne({username: username});
                 if (user) {
