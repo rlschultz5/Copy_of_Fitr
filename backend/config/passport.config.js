@@ -36,22 +36,27 @@ module.exports = (app) => {
                 let user = await User.findOne({username: username});
                 if (user) {
                     return done(null, false, {message: "Account exists with provided username"});
+                } else {
+                    let user = await new User({
+                        username: username,
+                        password: password,
+                        name: req.body.name,
+                        email: req.body.email,
+                        city: req.body.city,
+                        state: req.body.state,
+                        zipCode: req.body.zipCode,
+                        schoolYear: req.body.schoolYear,
+                        activities: req.body.activies,
+                        preferences: { // depends on format that front end sends request data
+                            activitiesExperience: req.body.activitiesExperience 
+                        },
+                        isAdmin: req.body.isAdmin
+                    });
+                    await user.save();
+                    
+                    return done(null, user);
                 }
-                User.create({
-                    username: username,
-                    password: password,
-                    name: req.body.name,
-                    email: req.body.email,
-                    city: req.body.city,
-                    state: req.body.state,
-                    zipCode: req.body.zipCode,
-                    schoolYear: req.body.schoolYear,
-                    activities: req.body.activies,
-                    preferences: { // depends on format that front end sends request data
-                        activitiesExperience: req.body.activitiesExperience 
-                    },
-                    isAdmin: req.body.isAdmin
-                })
+                
             } catch (err) {
                 console.log(err);
                 return done(err);
