@@ -105,7 +105,7 @@ const SignupScreen = ({ navigation }) => {
                 <TextInput onChangeText={setCity} value={city} placeholderTextColor="#ffc3b8" placeholder="City" style={styles.textInput} />
                 <TextInput onChangeText={setState} value={state} placeholderTextColor="#ffc3b8" placeholder="State" style={styles.textInput} />
                 <TextInput onChangeText={setZipcode} value={zipcode} placeholderTextColor="#ffc3b8" placeholder="Zipcode" style={styles.textInput} />
-                <TextInput onChangeText={setSchoolYear} value={schoolYear} placeholderTextColor="#ffc3b8" placeholder="School Year" style={styles.textInput} />
+                <TextInput onChangeText={setSchoolYear} value={schoolYear} placeholderTextColor="#ffc3b8" placeholder="School Year (will change to dropdown list)" style={styles.textInput} />
                 <Text style={styles.label}>Optional:</Text>
                 <Text style={styles.label}></Text>
                 <TextInput onChangeText={setActivities} value={activities} placeholderTextColor="#ffc3b8" placeholder="(Activities Option To Be Implemented)" style={styles.textInput} />
