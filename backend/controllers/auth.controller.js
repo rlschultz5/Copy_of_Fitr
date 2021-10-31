@@ -5,15 +5,15 @@ const User = db.user;
 
 exports.signUp = async (req, res) => {
     try {
-        passport.authenticate("signup", (err, user) => {
+        passport.authenticate("signup", (err, user, info) => {
             if (err) {
                 console.log(err);
                 res.status(500).send({error: err.message});
             } else {
                 if (user){
-                    res.status(401).send({message: "Account exists with provided username"});
+                    res.status(401).send({message: info.message});
                 } else {
-                    res.send({message: "New account successfully created"});
+                    res.send({message: info.message});
                 }
             }
         })(req, res)
