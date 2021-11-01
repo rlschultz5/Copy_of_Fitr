@@ -24,7 +24,7 @@ exports.signUp = async (req, res) => {
     }
 }
 
-exports.signIn = async (req, res, next) => {
+exports.signIn = async (req, res) => {
     try {
         passport.authenticate("signin", async (err, user, info) => {
             if (err) {
@@ -43,7 +43,7 @@ exports.signIn = async (req, res, next) => {
                     })
                 }
             }
-        })(req, res, next)
+        })(req, res)
     } catch (err) {
         console.log(err);
         res.status(500).send({error: err.message});
