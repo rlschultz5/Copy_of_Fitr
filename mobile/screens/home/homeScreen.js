@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import WorkoutList from './workoutList';
-import { StyleSheet, Text, View, Pressable} from 'react-native';
+import { StyleSheet, Text, View, Pressable, Button} from 'react-native';
 import Filter from './filter';
 
 const DUMMY = [{
@@ -32,8 +32,8 @@ export default function HomeScreen() {
           <Text>
               Filter
           </Text>
-        </Pressable>
-        <WorkoutList data={DUMMY}/>
+      </Pressable>
+      <WorkoutList data={DUMMY}/>
       <StatusBar style="auto" />
     </View>
   );
@@ -45,5 +45,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
