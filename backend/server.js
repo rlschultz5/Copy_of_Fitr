@@ -1,10 +1,13 @@
-const express = require('express')
+const express = require('express');
+const passport = require('passport')
 const dbConfig = require("./config/db.config")
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
+app.use(passport.initialize());
+require("./config/strategies.config")(passport);
 
 const db = require("./models")
 
