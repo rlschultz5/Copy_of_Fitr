@@ -1,5 +1,7 @@
 const passport = require("passport")
 const LocalStrategy = require("passport-local").Strategy;
+const JWTStrategy = require("passport-jwt").Strategy;
+const ExtractJWT = require("passport-jwt").ExtractJwt;
 const bcrypt = require("bcrypt");
 
 const db = require("../models")
@@ -63,6 +65,27 @@ module.exports = (passport) => {
                 } catch (err) {
                     console.log(err);
                     return done(err);
+                }
+            }
+        ))
+
+        passport.use("jwtverify", new JWTStrategy(
+            {
+                secretOrKey:'supersecretkey',
+                jwtFromRequest: ExtractJWT.fromUrlQueryParameter('token') // token will be a query parameter
+            },
+            async (token, done) => {
+                try {
+                    let user = await User.findOne({username: token.username})
+                    if (user) {
+                        console.log("user found")
+                        done(null, user);
+                    } else {
+                        console.log("no user found");
+                        done(null, false);
+                    }
+                } catch (err) {
+                    done(err, false)
                 }
             }
         ))
