@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import axios from "axios";
-import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
+import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, ScrollView, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import API from "../../api";
 
@@ -72,26 +72,29 @@ const CreateWorkout = ({ navigation }) => {
       style={styles.container}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.inner}>
-          <Text style={styles.header}>Fitr</Text>
-          <View>
-            <Text></Text>
-            <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setActivity} value={activity} placeholder="Activity (TODO: dropdown list)" style={styles.textInput} />
-            <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setExperience} value={experience} placeholder="Experience (TODO: dropdown list)" style={styles.textInput} />
-            <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setLength} value={length} placeholder="Length (TODO: dropdown list)" style={styles.textInput} />
-            <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setDateAndTime} value={dateAndTime} placeholder="Date and Time (TODO: clock implementation)" style={styles.textInput} />
-            <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setLocation} value={location} placeholder="Location (TODO: Decide on input)" style={styles.textInput} />
-            <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setMinPeople} value={minPeople} placeholder="Minimum People" style={styles.textInput} />
-            <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setMaxPeople} value={maxPeople} placeholder="Maximum People" style={styles.textInput} />
-            <Text></Text>
-            <Button color="white" disabled={disabled} title="Create Workout!" onPress={null} />
-          </View>
-          {(isError)?(<Text style={{color:"blue"}}>* Unsuccessful. Make sure all fields are filled out and try again.</Text>):<Text/>}
+        <ScrollView style={{ marginTop: 40 }}>
+          <View style={styles.inner}>
+            <Text style={styles.header}>Fitr</Text>
+            <View>
+              <Text></Text>
+              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setActivity} value={activity} placeholder="Activity (TODO: dropdown list)" style={styles.textInput} />
+              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setExperience} value={experience} placeholder="Experience (TODO: dropdown list)" style={styles.textInput} />
+              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setLength} value={length} placeholder="Length (TODO: dropdown list)" style={styles.textInput} />
+              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setDateAndTime} value={dateAndTime} placeholder="Date and Time (TODO: clock implementation)" style={styles.textInput} />
+              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setLocation} value={location} placeholder="Location (TODO: Decide on input)" style={styles.textInput} />
+              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setMinPeople} value={minPeople} placeholder="Minimum People" style={styles.textInput} />
+              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setMaxPeople} value={maxPeople} placeholder="Maximum People" style={styles.textInput} />
+              <Text></Text>
+              <Button color="white" disabled={disabled} title="Create Workout!" onPress={null} />
+            </View>
+            {(isError)?(<Text style={{color:"blue"}}>* Unsuccessful. Make sure all fields are filled out and try again.</Text>):<Text/>}
 
-          <View style={styles.btnContainer}>
-            <Button color="white" title="Find Workout" onPress={() => navigation.navigate('Home')} />
+            <View style={styles.btnContainer}>
+              <Button color="white" title="Find Workout" onPress={() => navigation.navigate('Home')} />
+              <Button color="white" title="Logout" onPress={() => navigation.navigate('Login')} />
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
