@@ -49,7 +49,7 @@ exports.getUser = (req, res) => {
 
 exports.getUsers = async (req, res) => {
   try {
-    let result = await User.find();
+    let result = await User.find({});
     console.log(result);
 
   } catch (err) {
