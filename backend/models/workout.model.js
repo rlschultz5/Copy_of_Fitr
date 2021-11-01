@@ -23,7 +23,7 @@ const Workout = mongoose.model(
             ref: "WorkoutLength",
             required: true
         },
-        creator: {
+        user_id: {
             type: mongoose.Schema.Types.ObjectID,
             ref: "User"
         }

@@ -30,14 +30,18 @@ exports.editUser = async (req, res) => {
 }
 
 exports.getUser = async (req, res) => {
-  if (!req.body.username){
+  if (!req.body.user_id){
     res.status(500).send({message: "No username submitted"});
   }
 
   try{
-    let username = req.body.username
-    let result = await User.findOne({username: username}).exec();
+    let user_id = req.body.user_id
+    let result = await User.findOne({_id: user_id});
+    if (!result) {
+      res.status(500).send({message: "No user found"});
+    }
     console.log(result);
+    res.send({data: result})
   } catch (err) {
     console.log(err);
     res.status(500).send({message: "An error has occured. Please check logs"})
@@ -48,7 +52,7 @@ exports.getUsers = async (req, res) => {
   try {
     let result = await User.find({});
     console.log(result);
-
+    res.send({data: result})
   } catch (err) {
     console.log(err);
     res.status(500).send({message: "An error has occured. Please check logs"})
@@ -56,7 +60,25 @@ exports.getUsers = async (req, res) => {
 }
 
 exports.changePassword = async (req, res) => {
-    res.send({message: "this is the change password method"});
+    if (!req.body.user_id){
+      throw "No user id was sent"
+    }
+
+    try {
+      let user_id = req.body.user_id;
+      let options = {new: true};
+      let update = {
+        city: req.body.city,
+        password: req.body.state
+      }
+      let result = await User.findOneAndUpdate({_id: user_id}, update, options);
+      console.log(result);
+      res.send({message: "User has been edited"})
+
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({message: "An error has occured. Please check logs"})
+    }
 }
 
 exports.updateWorkoutPref = async (req, res) => {
