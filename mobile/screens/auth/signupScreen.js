@@ -28,10 +28,10 @@ const SignupScreen = ({ navigation }) => {
 
 //   const onSubmit = async () => {
 
-//     if(username == null|| password == null || name == null || email == null || city ==null || state == null || zipcode == null ||schoolYear== null) {
-//       setError(true);
-//       return;
-//     }
+    // if(username == null|| password == null || name == null || email == null || city == null || state == null || zipcode == null ||schoolYear== null) {
+    //   setError(true);
+    //   return;
+    // }
 
 //     try {
 //       setDisabled(true);

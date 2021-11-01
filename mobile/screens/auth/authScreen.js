@@ -66,6 +66,7 @@ const authScreen = ({ navigation }) => {
             <Button color="white" title="Submit" disabled={isLoading} onPress={() => navigation.navigate('Home')} />
             <Button color="white" title="Forgot your password?" onPress={() => navigation.navigate('Forgot Password')} />
             <Button color="white" title="Don't have an account?" onPress={() => navigation.navigate('Signup')} />
+            <Button color="white" title="Create Workout temp nav" onPress={() => navigation.navigate('Create Workout')} />
           </View>
         </View>
       </TouchableWithoutFeedback>
