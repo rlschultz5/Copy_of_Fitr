@@ -29,22 +29,19 @@ exports.editUser = async (req, res) => {
   }
 }
 
-exports.getUser = (req, res) => {
+exports.getUser = async (req, res) => {
   if (!req.body.username){
     res.status(500).send({message: "No username submitted"});
   }
-  User.findOne({username: req.body.username}, (err, user) => {
-    if (err) {
-      res.status(500).send({message: err});
-      return;
-    }
-    res.status(200).send({
-      data: {
-        name: user.name,
-        username: user.username,
-      }
-    })
-  })
+
+  try{
+    let username = req.body.username
+    let result = await User.findOne({username: username}).exec();
+    console.log(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({message: "An error has occured. Please check logs"})
+  }
 }
 
 exports.getUsers = async (req, res) => {
