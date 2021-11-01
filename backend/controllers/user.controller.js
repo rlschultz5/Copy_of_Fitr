@@ -3,6 +3,7 @@ const User = db.user;
 const Workout = db.workout;
 const UserWorkout = db.userWorkout;
 
+
 exports.editUser = async (req, res) => {
   if (!req.body.username){
     throw "No username was sent."
@@ -46,6 +47,16 @@ exports.getUser = (req, res) => {
   })
 }
 
+exports.getUsers = async (req, res) => {
+  try {
+    let result = await User.find();
+    console.log(result);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({message: "An error has occured. Please check logs"})
+  }
+}
 
 exports.changePassword = async (req, res) => {
     res.send({message: "this is the change password method"});
@@ -83,6 +94,7 @@ exports.getWorkouts = async (req, res) => {
     res.status(500).send({message: err})
   }
 }
+
 
 exports.getCreatedWorkouts = async (req, res) => {
   if (!req.body.user_id) {
