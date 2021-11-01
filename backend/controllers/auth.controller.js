@@ -36,7 +36,7 @@ exports.signIn = async (req, res) => {
                     res.send({message: info.message})
                 }
             }
-        })
+        })(req, res)
     } catch (err) {
         console.log(err);
         res.status(500).send({error: err.message});
