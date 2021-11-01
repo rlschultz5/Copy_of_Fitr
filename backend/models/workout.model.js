@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const Workout = mongoose.model(
-    "Workout", 
+    "Workout",
     new mongoose.Schema({
         title: String,
         activity: {
