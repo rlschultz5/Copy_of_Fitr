@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const Workout = mongoose.model(
-    "Workout", 
+    "Workout",
     new mongoose.Schema({
         title: String,
         activity: {
@@ -23,7 +23,7 @@ const Workout = mongoose.model(
             ref: "WorkoutLength",
             required: true
         },
-        creator: {
+        user_id: {
             type: mongoose.Schema.Types.ObjectID,
             ref: "User"
         }
