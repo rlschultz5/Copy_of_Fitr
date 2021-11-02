@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import WorkoutList from './workoutList';
-import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Image, Button } from 'react-native';
 import Filter from './filter';
 
 const DUMMY = [{
@@ -39,6 +39,7 @@ export default function HomeScreen() {
         </Text>
       </Pressable>
       <WorkoutList data={DUMMY} />
+
       <StatusBar style="auto" />
     </View>
   );

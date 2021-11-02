@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const UserWorkout = mongoose.model(
     "UserWorkout",
     new mongoose.Schema({
-        user_ID: {
+      //change this to an array of user_id's?
+        user_id: {
           type: mongoose.Schema.Types.ObjectID,
           ref: "User"
         },
-        workout_ID: {
+        workout_id: {
           type: mongoose.Schema.Types.ObjectID,
           ref: "Workout"
         }

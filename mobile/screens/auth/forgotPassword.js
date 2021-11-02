@@ -1,15 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 // import axios from "axios";
 import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import API from "../../api";
 
-
-
-const authScreen = ({ navigation }) => {
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
+const ForgotPassword = ({ navigation }) => {
+  const [email, setEmail] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [authStatus, setAuthStatus] = useState("NA");
   const [isError, setError] = useState(false);
@@ -19,7 +15,7 @@ const authScreen = ({ navigation }) => {
   //   setIsLoading(true);
   //   try {
       
-  //     const res = await axios.post(`http://${API}:8080/api/signin`, { username: username, password: password });
+  //     const res = await axios.post(`http://${API}:8080/api/forgotPassword`, { email: email });
   //     setIsLoading(false);
 
   //     if (res.status != 200) {
@@ -33,9 +29,10 @@ const authScreen = ({ navigation }) => {
   //       await AsyncStorage.setItem('user', JSON.stringify(res.data))
   //     } catch (e) {
   //       // saving error
+  //       // TODO: CORRECT??
   //     }
 
-  //     navigation.navigate("MainNavigator", { screen: "Home" });
+  //     navigation.navigate("AuthNavigator", { screen: "Login" });
 
   //   } catch (e) {
   //     console.log(e.message);
@@ -47,7 +44,6 @@ const authScreen = ({ navigation }) => {
   // }
 
   // Change Submit button to {onSubmit}
-  // <Button color="white" title="Submit" disabled={isLoading} onPress={onSubmit} />
 
   return (
     <KeyboardAvoidingView
@@ -58,15 +54,14 @@ const authScreen = ({ navigation }) => {
         <View style={styles.inner}>
           <Text style={styles.header}>Fitr</Text>
           <View>
-            <TextInput placeholderTextColor="#ffc3b8" style ={styles.textInput}onChangeText={setUsername} value={username} placeholder="Username" style={styles.textInput} />
-            <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setPassword} value={password} placeholder="Password" style={styles.textInput} />
+            <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setEmail} value={email} placeholder="Email" style={styles.textInput} />
+            <Button color="white" title="Send reset password email" disabled={isLoading} onPress={null} />
           </View>
-          {(isError)?(<Text style={{color:"blue"}}>* Login Failed. The credentials do not match.</Text>):<Text/>}
+          {(isError)?(<Text style={{color:"blue"}}>* Email not listed. Try again or make an account today!</Text>):<Text/>}
+
           <View style={styles.btnContainer}>
-            <Button color="white" title="Submit" disabled={isLoading} onPress={() => navigation.navigate('Home')} />
-            <Button color="white" title="Forgot your password?" onPress={() => navigation.navigate('Forgot Password')} />
-            <Button color="white" title="Don't have an account?" onPress={() => navigation.navigate('Signup')} />
-            <Button color="white" title="Create Workout temp nav" onPress={() => navigation.navigate('Create Workout')} />
+            <Button color="white" title="Back to login screen" onPress={() => navigation.navigate('Login')} />
+            <Button color="white" title="Get Registered!" onPress={() => navigation.navigate('Signup')} />
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -74,9 +69,7 @@ const authScreen = ({ navigation }) => {
   );
 }
 
-
-
-export default authScreen;
+export default ForgotPassword;
 
 const styles = StyleSheet.create({
   container: {

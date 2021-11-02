@@ -25,9 +25,6 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.plugin(passportLocalMongoose);
-userSchema.methods.validPassword = (password) => {
-  return this.password === password;
-}
 
 const User = mongoose.model(
   "User", userSchema
