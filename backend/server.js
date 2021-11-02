@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(passport.initialize());
-require("./config/strategies.config")(passport);
+require("./passport/strategies")(passport);
 
 const db = require("./models")
 
