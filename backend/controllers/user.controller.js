@@ -68,12 +68,11 @@ exports.changePassword = async (req, res) => {
       let user_id = req.body.user_id;
       let options = {new: true};
       let update = {
-        city: req.body.city,
-        password: req.body.state
+        password: req.body.password
       }
       let result = await User.findOneAndUpdate({_id: user_id}, update, options);
       console.log(result);
-      res.send({message: "User has been edited"})
+      res.send({message: "Password has been edited"})
 
     } catch (err) {
       console.log(err);
