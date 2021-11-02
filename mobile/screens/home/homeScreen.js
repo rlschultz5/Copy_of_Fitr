@@ -22,22 +22,27 @@ const DUMMY = [{
 
 export default function HomeScreen() {
 
-  const [showFilter, setFilter] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
+  const [filter, setFilter] = useState()
 
   return (
     <View style={styles.container}>
-      <Text style={{ top: "10%", left: "5%", fontSize: 30 }}> Home </Text>
+      <Text style={{ left: "5%", fontSize: 30 }}> Home </Text>
       <View style={styles.listContainer}>
         <Text style={styles.title}>Workouts Available</Text>
 
       </View>
 
-      <Filter visible={showFilter} setVisible={setFilter} />
-      <Pressable onPress={() => setFilter(true)}>
-        <Text>
-          Filter
-        </Text>
+      <Pressable onPress={() => setShowFilter(true)}>
+        <View style={styles.filterBtn}>
+          <Text style={styles.filterBtnText}>
+          {(filter!=undefined)?filter.sports: "Set Filter"}
+          </Text>
+        </View>
       </Pressable>
+
+      <Filter visible={showFilter} setVisible={setShowFilter} />
+      
       <WorkoutList data={DUMMY} />
 
       <StatusBar style="auto" />
@@ -46,7 +51,22 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  filterBtnText:{
+    alignSelf:"center",
+    
+  },
+  filterBtn: {
+    alignSelf:"center",
+    borderColor: "grey",
+    borderWidth: 1,
+    borderRadius:15,
+    height:30,
+    width:"60%",
+    justifyContent:"center",
+    marginBottom:20,
+  },
   container: {
+    paddingTop:50,
     flex: 1,
     backgroundColor: '#fff',
   },

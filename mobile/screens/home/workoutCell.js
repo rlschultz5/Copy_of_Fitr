@@ -14,10 +14,15 @@ export default function WorkoutCell({data}) {
 
 const cellStyle = StyleSheet.create({
   container: {
-    height: "15%",
+    width:"80%",
+    padding:15,
+    borderColor:"grey",
+    borderWidth:1,
+    borderRadius:15,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    alignItems: "flex-start",
     justifyContent: 'center',
+    marginBottom:15,
   },
   title: {
       
