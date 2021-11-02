@@ -33,7 +33,7 @@ export default function Filter({ visible, setVisible }) {
     ]
 
     return (
-        <Modal visible={visible} animationType="fade">
+        <Modal transparent visible={visible} animationType="fade">
             <View style={filterStyle.bgModal} >
             </View>
             <Modal visible={visible} transparent={true} style={filterStyle.mainModal} animationType="slide" >
