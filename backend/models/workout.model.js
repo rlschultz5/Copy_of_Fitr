@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Workout = mongoose.model(
     "Workout",
     new mongoose.Schema({
-        title: String,
+        title: {type: String, required: true},
         activity: {
             type: mongoose.Schema.Types.String,
             ref: "Activity",
