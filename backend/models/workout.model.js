@@ -26,7 +26,9 @@ const Workout = mongoose.model(
         user_id: {
             type: mongoose.Schema.Types.ObjectID,
             ref: "User"
-        }
+        },
+        memberCount: Number,
+        isFull: Boolean
     })
 );
 
