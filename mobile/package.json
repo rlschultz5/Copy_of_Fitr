@@ -22,7 +22,7 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-safe-area-context": "3.3.2",
     "react-native-web": "0.17.1",
-    "react-native-woodpicker": "^0.3.11"
+    "react-native-woodpicker": "^0.3.14"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
