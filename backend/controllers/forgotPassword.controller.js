@@ -15,19 +15,23 @@ exports.forgotPassword = async (req, res) => {
         if (!doc) {
             res.status(401).send({error: "Username not found"});
         } else {
-            let token = await Token.findOne({ userId: user._id });
+            let token = await Token.findOne({ userId: doc._id });
             if (!token) {
                 token = await new Token({
-                    userId: user._id,
+                    userId: doc._id,
                     token: crypto.randomBytes(32).toString("hex"),
                 }).save();
             }
 
-            const link = `${emailConfig.base_url}/password-reset/${user._id}/${token.token}`;
-            await sendEmail(user.email, "Password reset", link);
-            res.send({message: "password reset link sent to provided email"});
+            const link = `${emailConfig.base_url}/api/passwordReset/${doc._id}/${token.token}`;
+            const email = doc.email;
+            if (!email) {
+                res.status(500).send({error: "No email found for user"})
+            } else {
+                await sendEmail(doc.email, "Password reset", link);
+                res.send({message: "password reset link sent to provided email"});
+            }
         }
-
     } catch (err) {
         console.log(err);
         res.status(500).send({error: err.message})
