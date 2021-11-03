@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Admin = mongoose.model(
     "Admin",
     new mongoose.Schema({
-        user_ID: {
+        user_id: {
           type: mongoose.Schema.Types.ObjectID,
           ref: "User"
       },
