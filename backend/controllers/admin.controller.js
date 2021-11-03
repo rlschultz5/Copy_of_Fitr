@@ -2,6 +2,7 @@ const db = require("../models");
 const User = db.user;
 const Admin = db.admin;
 
+//not working
 exports.addAdmin = async (req, res) => {
   if (!req.body.user_id){
     throw "No user id was sent"
@@ -11,7 +12,7 @@ exports.addAdmin = async (req, res) => {
     let user_id = req.body.user_id;
     let options = {new: true};
     let update = {
-      isAdmin: True
+      isAdmin: true
     }
     let result = await User.findOneAndUpdate({_id: user_id}, update, options);
     let admin = await new Admin({
@@ -38,7 +39,7 @@ exports.removeAdmin = async (req, res) => {
     let user_id = req.body.user_id;
     let options = {new: true};
     let update = {
-      isAdmin: False
+      isAdmin: false
     }
     let result = await User.findOneAndUpdate({_id: user_id}, update, options);
     let delete_admin = await Admin.deleteOne({user_id: user_id});
@@ -58,7 +59,7 @@ exports.getAdmin = async (req, res) => {
   }
 
   try{
-    let result = await User.findOne({_id: admin_id});
+    let result = await Admin.findById({_id: req.body.admin_id});
     if (!result) {
       res.status(500).send({message: "No admin found"});
     }
@@ -70,6 +71,7 @@ exports.getAdmin = async (req, res) => {
   }
 }
 
+//not working
 exports.updateEmail = async (req, res) => {
   if (!req.body.admin_id){
     throw "No admin id was sent"

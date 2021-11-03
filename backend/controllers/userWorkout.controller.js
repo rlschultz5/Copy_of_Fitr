@@ -12,7 +12,7 @@ exports.getParticipants = async (req, res) => {
       res.status(500).send({message: "No workout found"})
     }
     console.log(result)
-    res.send({data: result})
+    res.send({data: result.user_id})
   } catch (err) {
     console.log(err);
     res.status(500).send({message: "An error has occured. Please check logs"})
@@ -23,9 +23,10 @@ exports.getUserWorkouts = async (req, res) => {
     res.send({message: "this is the get userWorkout method"});
 }
 
+//not working
 exports.addUserWorkout = async (req, res) => {
     try{
-      let userWorkout = await new Activity({
+      let userWorkout = await new UserWorkout({
         user_id: req.body.user_id,
         workout_id: req.body.workout_id
       })

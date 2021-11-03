@@ -61,4 +61,5 @@ exports.resetPassword = async (req, res) => {
         console.log(err);
         res.status(500).send({message: "An error occurred"});
     }
+
 }
