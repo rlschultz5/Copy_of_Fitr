@@ -1,4 +1,5 @@
-const crypto = require("crypto")
+const crypto = require("crypto");
+const passwordGenerator = require("generate-password");
 const sendEmail = require("../utils/sendEmail");
 
 const emailConfig = require("../config/email.config")
@@ -23,12 +24,17 @@ exports.forgotPassword = async (req, res) => {
                 }).save();
             }
 
-            const link = `${emailConfig.base_url}/api/passwordReset/${doc._id}/${token.token}`;
+            const tempPassword = passwordGenerator.generate({
+                length: 20,
+                numbers: true
+            })
+            console.log(tempPassword)
+            const message = "Here is your temporary password: " + tempPassword;
             const email = doc.email;
             if (!email) {
                 res.status(500).send({error: "No email found for user"})
             } else {
-                await sendEmail(doc.email, "Password reset", link);
+                await sendEmail(doc.email, "Password reset", message);
                 res.send({message: "password reset link sent to provided email"});
             }
         }
