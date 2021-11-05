@@ -50,6 +50,7 @@ export default function Filter({ visible, setVisible }) {
                     <View style={filterStyle.grid}>
                         <Text style={{ flex: 1 }}>Sports</Text>
                         <Picker
+                            containerStyle={filterStyle.picker}
                             item={pickedSports}
                             items={SPORTS}
                             onItemChange={setSports}
@@ -62,6 +63,7 @@ export default function Filter({ visible, setVisible }) {
                     <View style={filterStyle.grid}>
                         <Text style={{ flex: 1 }}>Experience Level</Text>
                         <Picker
+                            containerStyle={filterStyle.picker}
                             item={pickedEL}
                             items={EXPERIENCE_LEVEL}
                             onItemChange={setEL}
@@ -74,6 +76,7 @@ export default function Filter({ visible, setVisible }) {
                     <View style={filterStyle.grid}>
                         <Text style={{ flex: 1 }}>Gender Specific?</Text>
                         <Picker
+                            containerStyle={filterStyle.picker}
                             item={pickedGender}
                             items={EXPERIENCE_LEVEL}
                             onItemChange={setGender}
@@ -97,6 +100,14 @@ export default function Filter({ visible, setVisible }) {
 }
 
 const filterStyle = StyleSheet.create({
+    picker:{
+        borderColor: "grey",
+        borderWidth:1,
+        height:25,
+        paddingRight:10,
+        paddingLeft:10,
+        borderRadius:10,
+    },
     grid: {
         padding: "10%",
         flexDirection: "row",
