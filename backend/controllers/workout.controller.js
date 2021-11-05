@@ -38,7 +38,7 @@ exports.editWorkout = async (req, res) => {
         console.log(err);
         res.status(500).send({error: err.message});
     }
-    
+
 }
 
 exports.deleteWorkout = async (req, res) => {
@@ -138,6 +138,24 @@ exports.isFull = async (req, res) => {
         }
         let response = {isFull: data.isFull};
         res.send(response);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({error: err.message});
+    }
+}
+
+exports.getAtendees = async (req, res) => {
+    if (!req.body.workout_id) {
+        res.status(500).send({error: "No workout_id provided"});
+    }
+    try {
+        const data = await Workout.findOne({_id: req.body.workout_id});
+        console.log(data);
+        if (data.length == 0) {
+            res.status(500).send({error: "No matching workout found"});
+        } else {
+            res.send({data: data.membersAttending});
+        }
     } catch (err) {
         console.log(err);
         res.status(500).send({error: err.message});

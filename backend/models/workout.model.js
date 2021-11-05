@@ -27,6 +27,10 @@ const Workout = mongoose.model(
             type: mongoose.Schema.Types.ObjectID,
             ref: "User"
         },
+        membersAttending: [{
+            type: mongoose.Schema.Types.ObjectID,
+            ref: "User"
+        }],
         memberCount: Number,
         isFull: Boolean
     })

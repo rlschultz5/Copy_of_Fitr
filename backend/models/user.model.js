@@ -21,7 +21,15 @@ const userSchema = new mongoose.Schema({
       ref: "Availability"
     }
   },
-  isAdmin: Boolean
+  isAdmin: Boolean,
+  createdWorkouts: [{
+    type: mongoose.Schema.Types.ObjectID,
+    ref: "Workout"
+  }],
+  attendingWorkouts: [{
+    type: mongoose.Schema.Types.ObjectID,
+    ref: "Workout"
+  }]
 })
 
 userSchema.plugin(passportLocalMongoose);
