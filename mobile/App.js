@@ -8,7 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 
 export default function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false); //set this to false to simulate logged out state
+  const [isLoggedIn, setLoggedIn] = useState(true); //set this to false to simulate logged out state
   return (
     <NavigationContainer>
       <AuthContext.Provider value={setLoggedIn}>
