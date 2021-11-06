@@ -16,7 +16,6 @@ function AuthNavigator() {
                 <Stack.Screen name="Login" component={AuthScreen} />
                 <Stack.Screen name="Signup" component={SignupScreen} />
                 <Stack.Screen name="Forgot Password" component={ForgotPassword} />
-                <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Create Workout" component={CreateWorkout} />
             </Stack.Navigator>
     );

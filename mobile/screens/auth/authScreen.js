@@ -2,10 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 // import axios from "axios";
 import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
-import App from '../../App';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import API from "../../api";
-
+import { AuthContext } from '../../contexts/authContext';
 
 
 const authScreen = ({ navigation }) => {
@@ -15,40 +14,41 @@ const authScreen = ({ navigation }) => {
   const [authStatus, setAuthStatus] = useState("NA");
   const [isError, setError] = useState(false);
 
+  const setLoggedIn = React.useContext(AuthContext);
 
-  const onSubmit = async () => {
-    setIsLoading(true);
-    try {
+
+  // const onSubmit = async () => {
+  //   setIsLoading(true);
+  //   try {
       
-      const res = await axios.post(`http://${API}:8080/api/signin`, { username: username, password: password });
-      setIsLoading(false);
+  //     const res = await axios.post(`http://${API}:8080/api/signin`, { username: username, password: password });
+  //     setIsLoading(false);
 
-      if (res.status != 200) {
-        setAuthStatus("denied");
-        setError(true);
-        console.log("denied");
-        return;
-      }
+  //     if (res.status != 200) {
+  //       setAuthStatus("denied");
+  //       setError(true);
+  //       console.log("denied");
+  //       return;
+  //     }
 
-      try {
-        await AsyncStorage.setItem('user', JSON.stringify(res.data))
-      } catch (e) {
-        // saving error
-      }
-      App(true);
-      navigation.navigate("MainNavigator", { screen: "Home" });
+  //     try {
+  //       await AsyncStorage.setItem('user', JSON.stringify(res.data))
+  //     } catch (e) {
+  //       // saving error
+  //     }
 
-    } catch (e) {
-      console.log(e.message);
-      setError(true);
-      setIsLoading(false);
-      setAuthStatus("denied");
-      return;
-    }
-  }
+  //     navigation.navigate("MainNavigator", { screen: "Home" });
+
+  //   } catch (e) {
+  //     console.log(e.message);
+  //     setError(true);
+  //     setIsLoading(false);
+  //     setAuthStatus("denied");
+  //     return;
+  //   }
+  // }
 
   // Change Submit button to {onSubmit}
-  // onPress={() => navigation.navigate('Home')} />
   // <Button color="white" title="Submit" disabled={isLoading} onPress={onSubmit} />
 
   return (
@@ -65,7 +65,7 @@ const authScreen = ({ navigation }) => {
           </View>
           {(isError)?(<Text style={{color:"blue"}}>* Login Failed. The credentials do not match.</Text>):<Text/>}
           <View style={styles.btnContainer}>
-            <Button color="white" title="Submit" disabled={isLoading} onPress={onSubmit} />
+            <Button color="white" title="Submit" disabled={isLoading} onPress={() => setLoggedIn(true)} />
             <Button color="white" title="Forgot your password?" onPress={() => navigation.navigate('Forgot Password')} />
             <Button color="white" title="Don't have an account?" onPress={() => navigation.navigate('Signup')} />
             <Button color="white" title="Create Workout temp nav" onPress={() => navigation.navigate('Create Workout')} />
