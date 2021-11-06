@@ -120,9 +120,24 @@ exports.getCreatedWorkouts = async (req, res) => {
   }
 
   try {
-    let result = await Workout.find({user_id: req.body.user_id})
+    let result = await User.findOne({_id: req.body.user_id})
     console.log(result)
-    res.send({data: result})
+    res.send({data: result.createdWorkouts})
+  } catch (err) {
+    console.log(err)
+    res.status(500).send({message: err})
+  }
+}
+
+exports.getAttendingWorkouts = async (req, res) => {
+  if (!req.body.user_id) {
+    res.status(500).send({message: "No user_id was provided."})
+  }
+
+  try {
+    let result = await User.findOne({_id: req.body.user_id})
+    console.log(result)
+    res.send({data: result.attendingWorkouts})
   } catch (err) {
     console.log(err)
     res.status(500).send({message: err})

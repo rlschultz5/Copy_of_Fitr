@@ -7,4 +7,5 @@ module.exports = (app) => {
     app.post("/api/user/updateWorkoutPreferences", userController.updateWorkoutPref);
     app.get("/api/user/getWorkouts", userController.getWorkouts);
     app.get("/api/user/getCreatedWorkouts", userController.getCreatedWorkouts);
+    app.get("/api/user/getAttendingWorkouts", userController.getAttendingWorkouts);
 }

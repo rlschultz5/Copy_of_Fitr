@@ -1,4 +1,5 @@
-const crypto = require("crypto")
+const crypto = require("crypto");
+const passwordGenerator = require("generate-password");
 const sendEmail = require("../utils/sendEmail");
 
 const emailConfig = require("../config/email.config")
@@ -15,19 +16,28 @@ exports.forgotPassword = async (req, res) => {
         if (!doc) {
             res.status(401).send({error: "Username not found"});
         } else {
-            let token = await Token.findOne({ userId: user._id });
+            let token = await Token.findOne({ userId: doc._id });
             if (!token) {
                 token = await new Token({
-                    userId: user._id,
+                    userId: doc._id,
                     token: crypto.randomBytes(32).toString("hex"),
                 }).save();
             }
 
-            const link = `${emailConfig.base_url}/password-reset/${user._id}/${token.token}`;
-            await sendEmail(user.email, "Password reset", link);
-            res.send({message: "password reset link sent to provided email"});
+            const tempPassword = passwordGenerator.generate({
+                length: 20,
+                numbers: true
+            })
+            console.log(tempPassword)
+            const message = "Here is your temporary password: " + tempPassword;
+            const email = doc.email;
+            if (!email) {
+                res.status(500).send({error: "No email found for user"})
+            } else {
+                await sendEmail(doc.email, "Password reset", message);
+                res.send({message: "password reset link sent to provided email"});
+            }
         }
-
     } catch (err) {
         console.log(err);
         res.status(500).send({error: err.message})
@@ -61,4 +71,5 @@ exports.resetPassword = async (req, res) => {
         console.log(err);
         res.status(500).send({message: "An error occurred"});
     }
+
 }
