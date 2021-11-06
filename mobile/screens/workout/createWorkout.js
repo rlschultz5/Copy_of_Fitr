@@ -85,7 +85,7 @@ const CreateWorkout = ({ navigation }) => {
               <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setMinPeople} value={minPeople} placeholder="Minimum People" style={styles.textInput} />
               <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setMaxPeople} value={maxPeople} placeholder="Maximum People" style={styles.textInput} />
               <Text></Text>
-              <Button color="white" disabled={disabled} title="Create Workout!" onPress={null} />
+              <Button color="white" disabled={disabled} title="Create Workout!" onPress={onSubmit} />
             </View>
             {(isError)?(<Text style={{color:"blue"}}>* Unsuccessful. Make sure all fields are filled out and try again.</Text>):<Text/>}
 
