@@ -15,38 +15,39 @@ const authScreen = ({ navigation }) => {
   const [isError, setError] = useState(false);
 
 
-  // const onSubmit = async () => {
-  //   setIsLoading(true);
-  //   try {
+  const onSubmit = async () => {
+    setIsLoading(true);
+    try {
       
-  //     const res = await axios.post(`http://${API}:8080/api/signin`, { username: username, password: password });
-  //     setIsLoading(false);
+      const res = await axios.post(`http://${API}:8080/api/signin`, { username: username, password: password });
+      setIsLoading(false);
 
-  //     if (res.status != 200) {
-  //       setAuthStatus("denied");
-  //       setError(true);
-  //       console.log("denied");
-  //       return;
-  //     }
+      if (res.status != 200) {
+        setAuthStatus("denied");
+        setError(true);
+        console.log("denied");
+        return;
+      }
 
-  //     try {
-  //       await AsyncStorage.setItem('user', JSON.stringify(res.data))
-  //     } catch (e) {
-  //       // saving error
-  //     }
+      try {
+        await AsyncStorage.setItem('user', JSON.stringify(res.data))
+      } catch (e) {
+        // saving error
+      }
 
-  //     navigation.navigate("MainNavigator", { screen: "Home" });
+      navigation.navigate("MainNavigator", { screen: "Home" });
 
-  //   } catch (e) {
-  //     console.log(e.message);
-  //     setError(true);
-  //     setIsLoading(false);
-  //     setAuthStatus("denied");
-  //     return;
-  //   }
-  // }
+    } catch (e) {
+      console.log(e.message);
+      setError(true);
+      setIsLoading(false);
+      setAuthStatus("denied");
+      return;
+    }
+  }
 
   // Change Submit button to {onSubmit}
+  // onPress={() => navigation.navigate('Home')} />
   // <Button color="white" title="Submit" disabled={isLoading} onPress={onSubmit} />
 
   return (
@@ -63,7 +64,7 @@ const authScreen = ({ navigation }) => {
           </View>
           {(isError)?(<Text style={{color:"blue"}}>* Login Failed. The credentials do not match.</Text>):<Text/>}
           <View style={styles.btnContainer}>
-            <Button color="white" title="Submit" disabled={isLoading} onPress={() => navigation.navigate('Home')} />
+            <Button color="white" title="Submit" disabled={isLoading} onPress={onSubmit} />
             <Button color="white" title="Forgot your password?" onPress={() => navigation.navigate('Forgot Password')} />
             <Button color="white" title="Don't have an account?" onPress={() => navigation.navigate('Signup')} />
             <Button color="white" title="Create Workout temp nav" onPress={() => navigation.navigate('Create Workout')} />
