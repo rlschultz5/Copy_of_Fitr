@@ -11,37 +11,37 @@ const ForgotPassword = ({ navigation }) => {
   const [isError, setError] = useState(false);
 
 
-  // const onSubmit = async () => {
-  //   setIsLoading(true);
-  //   try {
+  const onSubmit = async () => {
+    setIsLoading(true);
+    try {
       
-  //     const res = await axios.post(`http://${API}:8080/api/forgotPassword`, { email: email });
-  //     setIsLoading(false);
+      const res = await axios.post(`http://${API}:8080/api/forgotPassword`, { email: email });
+      setIsLoading(false);
 
-  //     if (res.status != 200) {
-  //       setAuthStatus("denied");
-  //       setError(true);
-  //       console.log("denied");
-  //       return;
-  //     }
+      if (res.status != 200) {
+        setAuthStatus("denied");
+        setError(true);
+        console.log("denied");
+        return;
+      }
 
-  //     try {
-  //       await AsyncStorage.setItem('user', JSON.stringify(res.data))
-  //     } catch (e) {
-  //       // saving error
-  //       // TODO: CORRECT??
-  //     }
+      try {
+        await AsyncStorage.setItem('user', JSON.stringify(res.data))
+      } catch (e) {
+        // saving error
+        // TODO: CORRECT??
+      }
 
-  //     navigation.navigate("AuthNavigator", { screen: "Login" });
+      navigation.navigate("AuthNavigator", { screen: "Login" });
 
-  //   } catch (e) {
-  //     console.log(e.message);
-  //     setError(true);
-  //     setIsLoading(false);
-  //     setAuthStatus("denied");
-  //     return;
-  //   }
-  // }
+    } catch (e) {
+      console.log(e.message);
+      setError(true);
+      setIsLoading(false);
+      setAuthStatus("denied");
+      return;
+    }
+  }
 
   // Change Submit button to {onSubmit}
 
@@ -55,7 +55,7 @@ const ForgotPassword = ({ navigation }) => {
           <Text style={styles.header}>Fitr</Text>
           <View>
             <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setEmail} value={email} placeholder="Email" style={styles.textInput} />
-            <Button color="white" title="Send reset password email" disabled={isLoading} onPress={null} />
+            <Button color="white" title="Send reset password email" disabled={isLoading} onPress={onSubmit} />
           </View>
           {(isError)?(<Text style={{color:"blue"}}>* Email not listed. Try again or make an account today!</Text>):<Text/>}
 

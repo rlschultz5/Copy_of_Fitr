@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 // import axios from "axios";
 import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
+import App from '../../App';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import API from "../../api";
 
@@ -34,7 +35,7 @@ const authScreen = ({ navigation }) => {
       } catch (e) {
         // saving error
       }
-
+      App(true);
       navigation.navigate("MainNavigator", { screen: "Home" });
 
     } catch (e) {
