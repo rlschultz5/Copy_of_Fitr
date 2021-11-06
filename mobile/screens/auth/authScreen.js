@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import API from "../../api";
-
+import { AuthContext } from '../../contexts/authContext';
 
 
 const authScreen = ({ navigation }) => {
@@ -13,6 +13,8 @@ const authScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [authStatus, setAuthStatus] = useState("NA");
   const [isError, setError] = useState(false);
+
+  const setLoggedIn = React.useContext(AuthContext);
 
 
   // const onSubmit = async () => {
@@ -63,7 +65,7 @@ const authScreen = ({ navigation }) => {
           </View>
           {(isError)?(<Text style={{color:"blue"}}>* Login Failed. The credentials do not match.</Text>):<Text/>}
           <View style={styles.btnContainer}>
-            <Button color="white" title="Submit" disabled={isLoading} onPress={() => navigation.navigate('Home')} />
+            <Button color="white" title="Submit" disabled={isLoading} onPress={() => setLoggedIn(true)} />
             <Button color="white" title="Forgot your password?" onPress={() => navigation.navigate('Forgot Password')} />
             <Button color="white" title="Don't have an account?" onPress={() => navigation.navigate('Signup')} />
             <Button color="white" title="Create Workout temp nav" onPress={() => navigation.navigate('Create Workout')} />
