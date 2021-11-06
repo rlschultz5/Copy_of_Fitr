@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, ScrollView, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import API from "../../api";
-
+import { AuthContext } from '../../contexts/authContext';
 const CreateWorkout = ({ navigation }) => {
   const [activity, setActivity] = useState(null);
   const [experience, setExperience] = useState(null);
@@ -16,6 +16,7 @@ const CreateWorkout = ({ navigation }) => {
   const [authStatus, setAuthStatus] = useState("NA");
   const [isError, setError] = useState(false);
 
+  const setLoggedIn = React.useContext(AuthContext);
 
   const onSubmit = async () => {
 
@@ -90,7 +91,7 @@ const CreateWorkout = ({ navigation }) => {
             {(isError)?(<Text style={{color:"blue"}}>* Unsuccessful. Make sure all fields are filled out and try again.</Text>):<Text/>}
 
             <View style={styles.btnContainer}>
-              <Button color="white" title="Find Workout" onPress={() => navigation.navigate('Home')} />
+              <Button color="white" title="Find Workout" onPress={() => setLoggedIn(true)} />
               <Button color="white" title="Logout" onPress={() => navigation.navigate('Login')} />
             </View>
           </View>
