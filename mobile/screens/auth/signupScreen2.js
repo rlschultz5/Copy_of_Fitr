@@ -4,16 +4,8 @@ import { View, KeyboardAvoidingView, SafeAreaView, ScrollView, TextInput, StyleS
 // import axios from "axios";
 // import API from "../../api";
 
-
-const SignupScreen = ({ navigation }) => {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [city, setCity] = useState(true);
-  const [state, setState] = useState();
-  const [zipcode, setZipcode] = useState();
-  const [schoolYear, setSchoolYear] = useState();
+// May or may not need
+const SignupScreen2 = ({ navigation }) => {
   const [activities, setActivities] = useState();
   const [preferences, setPreferences] = useState();
   const [isAdmin, setIsAdmin] = useState();
@@ -26,50 +18,50 @@ const SignupScreen = ({ navigation }) => {
     navigation.navigate("Login");
   }
 
-  const onSubmit = async () => {
+//   const onSubmit = async () => {
 
-    if(username == null|| password == null || name == null || email == null || city == null || state == null || zipcode == null ||schoolYear == null) {
-      setError(true);
-      return;
-    }
+    // if(username == null|| password == null || name == null || email == null || city == null || state == null || zipcode == null ||schoolYear== null) {
+    //   setError(true);
+    //   return;
+    // }
 
-    try {
-      setDisabled(true);
-      const res = await axios.post(`http://${API}:8080/api/signup`,
-        {
-          username: username,
-          password: password,
-          name: username,
-          email: email,
-          city: city,
-          state: state,
-          zipcode: zipcode,
-          schoolYear: schoolYear,
-          activities: activities,
-          preferences: preferences,
-          isAdmin: false
-        });
-      setIsLoading(false);
+//     try {
+//       setDisabled(true);
+//       const res = await axios.post(`http://${API}:8080/api/signup`,
+//         {
+//           username: username,
+//           password: password,
+//           name: username,
+//           email: email,
+//           city: city,
+//           state: state,
+//           zipcode: zipcode,
+//           schoolYear: schoolYear,
+//           activities: activities,
+//           preferences: preferences,
+//           isAdmin: false
+//         });
+//       setIsLoading(false);
 
 
-      if (res.status != 200) {
-        setAuthStatus("denied");
-        console.log("denied");
-        return;
-      }
-      try {
-        await AsyncStorage.setItem('user', JSON.stringify(res.data))
-        console.log(res.data);
-      } catch (e) {
-        // saving error
-      }
+//       if (res.status != 200) {
+//         setAuthStatus("denied");
+//         console.log("denied");
+//         return;
+//       }
+//       try {
+//         await AsyncStorage.setItem('user', JSON.stringify(res.data))
+//         console.log(res.data);
+//       } catch (e) {
+//         // saving error
+//       }
 
-      setSubmitted(true);
-    } catch (e) {
-      console.log(e.message);
-    }
-    setDisabled(false);
-  }
+//       setSubmitted(true);
+//     } catch (e) {
+//       console.log(e.message);
+//     }
+//     setDisabled(false);
+//   }
 
 // Change Create button to {onSubmit}
 
@@ -116,7 +108,7 @@ const SignupScreen = ({ navigation }) => {
 
 
               <View style={styles.btnContainer}>
-                <Button color="white" disabled={disabled} title="Create" onPress={onSubmit} />
+                <Button color="white" disabled={disabled} title="Create" onPress={null} />
                 <Button color="white" title="Already have an account?" onPress={() => navigation.navigate("Login")} />
               </View>
             </View>
