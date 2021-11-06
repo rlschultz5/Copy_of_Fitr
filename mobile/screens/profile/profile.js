@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Pressable, Image, Button } from 'react-native';
 import ProfileList from './profileList';
-
+import { AuthContext } from '../../contexts/authContext';
 const DUMMY = [{
   username: "JDOE",
   password: "********",
@@ -18,6 +18,9 @@ const DUMMY = [{
 }]
 
 export default function ProfileScreen({navigation}) {
+
+    const setLoggedIn = React.useContext(AuthContext);
+
 
   return (
     <View style={styles.container}>
@@ -36,7 +39,7 @@ export default function ProfileScreen({navigation}) {
           Delete Account
         </Text>
       </Pressable> 
-      <Pressable onPress={()=>navigation.navigate("Login")}>
+      <Pressable onPress={()=>setLoggedIn(false)}>
         <Text style={{marginBottom:20}}>
           Logout
         </Text>
