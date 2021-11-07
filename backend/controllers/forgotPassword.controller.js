@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const bcrypt = require('bcrypt');
 const passwordGenerator = require("generate-password");
 const sendEmail = require("../utils/sendEmail");
 
@@ -28,6 +29,8 @@ exports.forgotPassword = async (req, res) => {
                 length: 20,
                 numbers: true
             })
+            doc.password = await bcrypt.hash(tempPassword, 10);
+            await doc.save();
             console.log(tempPassword)
             const message = "Here is your temporary password: " + tempPassword;
             const email = doc.email;
@@ -35,7 +38,7 @@ exports.forgotPassword = async (req, res) => {
                 res.status(500).send({error: "No email found for user"})
             } else {
                 await sendEmail(doc.email, "Password reset", message);
-                res.send({message: "password reset link sent to provided email"});
+                res.send({message: "new temporary password sent to provided email"});
             }
         }
     } catch (err) {
