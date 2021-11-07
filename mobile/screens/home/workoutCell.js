@@ -5,8 +5,9 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function WorkoutCell({data}) {
   return (
     <View style={cellStyle.container}>
-      <Text>{data.title}</Text>
+      <Text style={{fontWeight:"600", fontSize:16, marginBottom:15}}>{data.title}</Text>
       <Text>{data.sports}</Text>
+      <Text>{`Experience Level: ${data.level}`}</Text>
       <Text>{`${data.filled}/${data.capacity}`}</Text>
     </View>
   );
