@@ -11,7 +11,7 @@ exports.signUp = async (req, res) => {
                 console.log(err);
                 res.status(500).send({error: err.message});
             } else {
-                if (user){
+                if (!user){
                     res.status(401).send({message: info.message});
                 } else {
                     res.send({message: info.message});
