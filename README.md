@@ -45,3 +45,8 @@ Run the expo server\
 
 When your browser opens with QR code displayed, scan the QR code with your Iphone camera app, and click when redirection appears.\
 You will then be lead to the Expo app and you App should be running.
+
+
+## Test
+Make sure that Jest is installed (should be installed when npm install).\
+`npm test`\
