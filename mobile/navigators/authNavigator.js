@@ -6,7 +6,6 @@ import AuthScreen from '../screens/auth/authScreen';
 import SignupScreen from '../screens/auth/signupScreen';
 import ForgotPassword from '../screens/auth/forgotPassword';
 import HomeScreen from '../screens/home/homeScreen';
-import CreateWorkout from '../screens/workout/createWorkout';
 
 const Stack = createStackNavigator();
 
@@ -16,7 +15,6 @@ function AuthNavigator() {
                 <Stack.Screen name="Login" component={AuthScreen} />
                 <Stack.Screen name="Signup" component={SignupScreen} />
                 <Stack.Screen name="Forgot Password" component={ForgotPassword} />
-                <Stack.Screen name="Create Workout" component={CreateWorkout} />
             </Stack.Navigator>
     );
 }

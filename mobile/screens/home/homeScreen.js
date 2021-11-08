@@ -42,7 +42,8 @@ export default function HomeScreen({ navigation }) {
 
       </View>
 
-      <Pressable style={{backgroundColor:"#004275", justifyContent:"center",height:50, margin:15, marginTop: 25, borderRadius:10}}>
+      <Pressable style={{backgroundColor:"#004275", justifyContent:"center",height:50, margin:15, marginTop: 25, borderRadius:10}}
+      onPress={()=>{navigation.navigate("Create Workout")}}>
         <Text style={{color:"white", alignSelf:"center", fontWeight:"500", fontSize:15}}>
           Create Workout
         </Text>
@@ -63,7 +64,7 @@ export default function HomeScreen({ navigation }) {
 
       <Filter visible={showFilter} setVisible={setShowFilter} />
 
-      <WorkoutList data={DUMMY} />
+      <WorkoutList data={DUMMY} navigation={navigation}/>
 
       <StatusBar style="auto" />
     </View>

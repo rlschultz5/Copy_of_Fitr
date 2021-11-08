@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Modal, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Modal, Pressable, TextInput, ScrollView} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from 'react-native-woodpicker'
-
+import CheckBox from 'react-native-check-box'
 
 
 
@@ -11,6 +11,7 @@ export default function Filter({ visible, setVisible }) {
     const [pickedSports, setSports] = useState();
     const [pickedEL, setEL] = useState();
     const [pickedGender, setGender] = useState();
+    const [isChecked, setIsChecked] = useState(false);
 
     const SPORTS = [
         { label: "Basketball", value: 1 },
@@ -24,7 +25,7 @@ export default function Filter({ visible, setVisible }) {
     ]
 
     const GENDERS = [
-        { label: "No", value: 1},
+        { label: "No", value: 1 },
         { label: "Female", value: 2 },
         { label: "Male", value: 3 },
         { label: "Non-Binary", value: 4 },
@@ -47,6 +48,7 @@ export default function Filter({ visible, setVisible }) {
                         <Text style={filterStyle.title}>Filters</Text>
                         <Text>Set filters for your workouts!</Text>
                     </View>
+                    <ScrollView>
                     <View style={filterStyle.grid}>
                         <Text style={{ flex: 1 }}>Sports</Text>
                         <Picker
@@ -88,8 +90,19 @@ export default function Filter({ visible, setVisible }) {
                     </View>
                     <View style={filterStyle.grid}>
                         <Text style={{ flex: 1 }}>Capacity</Text>
-                        <Text style={{ flex: 1, textAlign: "right" }}>boo</Text>
+                        <Text keyboardType="numeric" style={{ flex: 1, textAlign: "right" }}>N/A</Text>
                     </View>
+                    
+                    <CheckBox
+    style={{flex: 1, padding: "10%"}}
+    onClick={()=>{
+      setIsChecked(!isChecked)
+    }}
+    isChecked={isChecked}
+    leftText={"CheckBox"}
+/>
+</ScrollView>
+
 
 
                 </View>
@@ -100,13 +113,13 @@ export default function Filter({ visible, setVisible }) {
 }
 
 const filterStyle = StyleSheet.create({
-    picker:{
+    picker: {
         borderColor: "grey",
-        borderWidth:1,
-        height:25,
-        paddingRight:10,
-        paddingLeft:10,
-        borderRadius:10,
+        borderWidth: 1,
+        height: 25,
+        paddingRight: 10,
+        paddingLeft: 10,
+        borderRadius: 10,
     },
     grid: {
         padding: "10%",

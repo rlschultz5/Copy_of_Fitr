@@ -1,14 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Pressable} from 'react-native';
 
-export default function WorkoutCell({data}) {
+export default function WorkoutCell({navigation, data}) {
   return (
     <View style={cellStyle.container}>
+          <Pressable style={{width:"100%"}} onPress={()=>{navigation.navigate("Detail", {workout: data})}}>
+
       <Text style={{fontWeight:"600", fontSize:16, marginBottom:15}}>{data.title}</Text>
       <Text>{data.sports}</Text>
       <Text>{`Experience Level: ${data.level}`}</Text>
       <Text>{`${data.filled}/${data.capacity}`}</Text>
+      </Pressable>
+
     </View>
   );
 }

@@ -4,11 +4,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import WorkoutCell from "./workoutCell";
 
 
-export default function WorkoutList({data}) {
+export default function WorkoutList({data, navigation}) {
   return (
     <View style={styles.container}>
       {data.map((workout, index)=>{
-          return <WorkoutCell key={index} data={workout}/>
+          return <WorkoutCell navigation={navigation} key={index} data={workout}/>
       })}
     </View>
   );
