@@ -18,11 +18,11 @@ const DUMMY = [{
   level: "All",
   sports: "Running",
   location: "College Library",
-  capacity: -1,
+  capacity: 12,
   filled: 3
 }]
 
-export default function HomeScreen({navigation}) {
+export default function HomeScreen({ navigation }) {
 
   const [showFilter, setShowFilter] = useState(false);
   const [filter, setFilter] = useState()
@@ -30,15 +30,27 @@ export default function HomeScreen({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.grid}>
-        <Text style={{ left: "5%", fontSize: 30, flex: 1 }}> Home </Text>
-        <Pressable onPress={()=>navigation.navigate("Profile")}>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <Text style={{ fontSize: 30, fontWeight: "700" }}> Fitr </Text>
+          <Image resizeMode="contain" style={{ width: 30, height: 30, top: "1%", left: 10 }} source={require("../../assets/logo.png")} />
+
+        </View>
+
+        <Pressable onPress={() => navigation.navigate("Profile")}>
           <Ionicons size={30} name="person-circle-outline" />
         </Pressable>
-        
+
       </View>
 
+      <Pressable style={{backgroundColor:"#004275", justifyContent:"center",height:50, margin:15, marginTop: 25, borderRadius:10}}
+      onPress={()=>{navigation.navigate("Create Workout")}}>
+        <Text style={{color:"white", alignSelf:"center", fontWeight:"500", fontSize:15}}>
+          Create Workout
+        </Text>
+
+      </Pressable>
       <View style={styles.listContainer}>
-        <Text style={styles.title}>Workouts Available</Text>
+        <Text style={styles.title}>Workouts Available: </Text>
 
       </View>
 
@@ -52,7 +64,7 @@ export default function HomeScreen({navigation}) {
 
       <Filter visible={showFilter} setVisible={setShowFilter} />
 
-      <WorkoutList data={DUMMY} />
+      <WorkoutList data={DUMMY} navigation={navigation}/>
 
       <StatusBar style="auto" />
     </View>
@@ -62,12 +74,14 @@ export default function HomeScreen({navigation}) {
 const styles = StyleSheet.create({
   grid: {
     padding: "5%",
+    paddingBottom: "3%",
     flexDirection: "row",
     justifyContent: "space-between",
+    borderBottomColor: "#d9d9d9",
+    borderBottomWidth: 1
   },
   filterBtnText: {
     alignSelf: "center",
-
   },
   filterBtn: {
     alignSelf: "center",
@@ -80,13 +94,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   container: {
-    paddingTop: 50,
+    paddingTop: 30,
     flex: 1,
     backgroundColor: '#fff',
   },
   title: {
     fontSize: 20,
-    fontWeight: "500",
+    fontWeight: "600",
   },
   listContainer: {
     padding: 20,
