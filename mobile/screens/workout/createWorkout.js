@@ -78,22 +78,18 @@ const CreateWorkout = ({ navigation }) => {
             <Text style={styles.header}>Fitr</Text>
             <View>
               <Text></Text>
-              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setActivity} value={activity} placeholder="Activity (TODO: dropdown list)" style={styles.textInput} />
-              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setExperience} value={experience} placeholder="Experience (TODO: dropdown list)" style={styles.textInput} />
-              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setLength} value={length} placeholder="Length (TODO: dropdown list)" style={styles.textInput} />
-              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setDateAndTime} value={dateAndTime} placeholder="Date and Time (TODO: clock implementation)" style={styles.textInput} />
-              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setLocation} value={location} placeholder="Location (TODO: Decide on input)" style={styles.textInput} />
-              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setMinPeople} value={minPeople} placeholder="Minimum People" style={styles.textInput} />
-              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setMaxPeople} value={maxPeople} placeholder="Maximum People" style={styles.textInput} />
+              <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setActivity} value={activity} placeholder="Activity (TODO: dropdown list)" style={styles.textInput} />
+              <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setExperience} value={experience} placeholder="Experience (TODO: dropdown list)" style={styles.textInput} />
+              <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setLength} value={length} placeholder="Length (TODO: dropdown list)" style={styles.textInput} />
+              <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setDateAndTime} value={dateAndTime} placeholder="Date and Time (TODO: clock implementation)" style={styles.textInput} />
+              <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setLocation} value={location} placeholder="Location (TODO: Decide on input)" style={styles.textInput} />
+              <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setMinPeople} value={minPeople} placeholder="Minimum People" style={styles.textInput} />
+              <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setMaxPeople} value={maxPeople} placeholder="Maximum People" style={styles.textInput} />
               <Text></Text>
-              <Button color="white" disabled={disabled} title="Create Workout!" onPress={onSubmit} />
+              <Button color="black" disabled={disabled} title="Create Workout!" onPress={onSubmit} />
             </View>
             {(isError)?(<Text style={{color:"blue"}}>* Unsuccessful. Make sure all fields are filled out and try again.</Text>):<Text/>}
 
-            <View style={styles.btnContainer}>
-              <Button color="white" title="Find Workout" onPress={() => setLoggedIn(true)} />
-              <Button color="white" title="Logout" onPress={() => navigation.navigate('Login')} />
-            </View>
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>
@@ -106,7 +102,7 @@ export default CreateWorkout;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#344955"
+    backgroundColor: "white"
   },
   inner: {
     padding: 24,
@@ -116,13 +112,12 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 36,
     fontWeight: "300",
-    marginBottom: 48,
-    color:"white",
+    color:"black",
   },
   textInput: {
     height: 40,
-    color: "white",
-    borderColor: "white",
+    color: "black",
+    borderColor: "grey",
     borderBottomWidth: 1,
     marginBottom: 50
   },
