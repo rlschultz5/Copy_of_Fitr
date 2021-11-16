@@ -386,7 +386,7 @@ require("./routes/workout.routes")(app);
 
 
 app.get("/", (req, res) => {
-    res.json({message: "Please give us an A :)"});
+    res.json({message: "Welcome to Fitr :)"});
 })
 
 module.exports = app;
