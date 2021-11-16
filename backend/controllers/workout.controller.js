@@ -114,7 +114,7 @@ exports.getWorkouts = async (req, res) => {
     }
     try {
         const data = await Workout.find(req.body.fields);
-        console.log(data);
+        console.log(req.body.fields);
         if (data.length == 0) {
             res.status(500).send({error: "No matching workout found"});
         } else {

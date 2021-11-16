@@ -7,7 +7,8 @@ const Detail = ({ route, navigation }) => {
       <ScrollView style={{ flex: 1, backgroundColor: "white", padding:30}}>
        <Text style={styles.header}>Detail</Text>
       <Text style={{fontWeight:"500", fontSize:24, marginBottom:15}}>{route.params.workout.title}</Text>
-      <Text style={{fontWeight:"300", fontSize:20, marginBottom:15}}>{`Sports: ${route.params.workout.sports}`}</Text>
+      <Text style={{fontWeight:"300", fontSize:20, marginBottom:15}}>{`Sports: ${route.params.workout.activity}`}</Text>
+      <Text style={{fontWeight:"300", fontSize:20, marginBottom:15}}>{`${route.params.workout.description}`}</Text>
       <Text style={{fontWeight:"300", fontSize:20, marginBottom:15}}>{`Experience Level: ${route.params.workout.level}`}</Text>
       <Text style={{fontWeight:"300", fontSize:20, marginBottom:15}}>{`Capacity: ${route.params.workout.filled}/${route.params.workout.capacity}`}</Text>
       </ScrollView >
