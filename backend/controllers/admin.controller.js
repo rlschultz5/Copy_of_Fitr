@@ -2,21 +2,30 @@ const db = require("../models");
 const User = db.user;
 const Admin = db.admin;
 
-//not working
+//can add admin by email or user_id
 exports.addAdmin = async (req, res) => {
-  if (!req.body.user_id){
-    throw "No user id was sent"
+  if (!req.body.user_id && !req.body.email){
+    throw "No user id or email was sent"
   }
 
   try {
-    let user_id = req.body.user_id;
+    let user_id = req.body.user_id ? req.body.user_id : null;
+    let email = req.body.email ? req.body.email : null;
+    let query = {};
+    if (user_id) {
+      query._id = user_id;
+    } else {
+      query.email = email;
+    }
+    console.log(query);
     let options = {new: true};
     let update = {
       isAdmin: true
     }
-    let result = await User.findOneAndUpdate({_id: user_id}, update, options);
+    let result = await User.findOneAndUpdate(query, update, options);
+    console.log(result);
     let admin = await new Admin({
-      user_id: user_id,
+      user_id: result._id,
       email: result.email
     })
     await admin.save();
