@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import WorkoutList from './workoutList';
 import { StyleSheet, Text, View, Pressable, Image, Button } from 'react-native';
 import Filter from './filter';
 import { Ionicons } from '@expo/vector-icons';
-
+import API from "../../api.js"
+import axios from "axios";
 
 const DUMMY = [{
   title: "4v4 Basketball at the Nick!",
@@ -24,8 +25,35 @@ const DUMMY = [{
 
 export default function HomeScreen({ navigation }) {
 
+  const [workouts, setWorkouts] = useState({});
   const [showFilter, setShowFilter] = useState(false);
-  const [filter, setFilter] = useState()
+  const [filter, setFilter] = useState({});
+  const [loading,setLoading] = useState(true);
+
+  useEffect(()=>{
+    const getWorkouts = async () => {
+      setLoading(true);
+      let extractedFilter = {};
+      for(let key in filter) {
+        if(filter[key].value != -1 && filter[key] != "" ) {
+          extractedFilter[key] = filter[key].label;
+        }
+      }
+      console.log(extractedFilter);
+      try{
+      const res = await axios.post(`http://${API}:8080/api/workout/getWorkouts`, {
+        fields:extractedFilter
+      });
+      setWorkouts(res.data.data);
+      console.log(res.data.data)
+      setLoading(false);
+      } catch (e) {
+        console.log(e.message);
+      }
+    }
+    getWorkouts();
+  },[filter])
+
 
   return (
     <View style={styles.container}>
@@ -57,14 +85,15 @@ export default function HomeScreen({ navigation }) {
       <Pressable onPress={() => setShowFilter(true)}>
         <View style={styles.filterBtn}>
           <Text style={styles.filterBtnText}>
-            {(filter != undefined) ? filter.sports : "Set Filter"}
+            {(filter.activity)?filter.activity.label:"Set Filter"}
           </Text>
         </View>
       </Pressable>
 
-      <Filter visible={showFilter} setVisible={setShowFilter} />
+      <Filter visible={showFilter} setVisible={setShowFilter} filter={filter} setFilter={setFilter} />
 
-      <WorkoutList data={DUMMY} navigation={navigation}/>
+      {(loading)?
+  (<Text> Loading... </Text>):<WorkoutList data={workouts} navigation={navigation}/>}
 
       <StatusBar style="auto" />
     </View>

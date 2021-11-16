@@ -9,6 +9,7 @@ const Workout = mongoose.model(
             ref: "Activity",
             required: true
         },
+        description: String,
         location: String,
         minPeople: {type: Number, required: true},
         maxPeople: {type: Number},
