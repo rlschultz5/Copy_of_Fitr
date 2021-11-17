@@ -4,14 +4,23 @@ import { View, KeyboardAvoidingView, Image, ScrollView, TextInput, StyleSheet, T
 const Detail = ({ route, navigation }) => {
   return (
     <View style={{ flex: 1, paddingTop: 50, backgroundColor: "white" }}>
-      <ScrollView style={{ flex: 1, backgroundColor: "white", padding:30}}>
-       <Text style={styles.header}>Detail</Text>
-      <Text style={{fontWeight:"500", fontSize:24, marginBottom:15}}>{route.params.workout.title}</Text>
-      <Text style={{fontWeight:"300", fontSize:20, marginBottom:15}}>{`Sports: ${route.params.workout.activity}`}</Text>
-      <Text style={{fontWeight:"300", fontSize:20, marginBottom:15}}>{`${route.params.workout.description}`}</Text>
-      <Text style={{fontWeight:"300", fontSize:20, marginBottom:15}}>{`Experience Level: ${route.params.workout.level}`}</Text>
-      <Text style={{fontWeight:"300", fontSize:20, marginBottom:15}}>{`Capacity: ${route.params.workout.filled}/${route.params.workout.capacity}`}</Text>
+      <ScrollView style={{ flex: 1, backgroundColor: "white", padding: 23 }}>
+        <Text style={styles.header}>Detail</Text>
+        <View style={{ borderBottomWidth:1, borderColor: "#d9d9d9", marginBottom:15}}>
+          <Text style={{ fontWeight: "500", fontSize: 24, marginBottom: 15, color: "#e6006b" }}>{route.params.workout.title}</Text>
+          <Text style={{ fontWeight: "400", fontSize: 18, marginBottom: 15 }}>{`${route.params.workout.description}`}</Text>
+        </View>
+        <Text style={{ fontWeight: "300", fontSize: 18, marginBottom: 15, color:"#3d3d3d" }}>{`Sports: ${route.params.workout.activity}`}</Text>
+        <Text style={{ fontWeight: "300", fontSize: 18, marginBottom: 15, color:"#3d3d3d" }}>{`Experience Level: ${route.params.workout.experienceLevel}`}</Text>
+        <Text style={{ fontWeight: "300", fontSize: 18, marginBottom: 15, color:"#3d3d3d"}}>{`Capacity: ${route.params.workout.filled}/${route.params.workout.capacity}`}</Text>
       </ScrollView >
+      <TouchableWithoutFeedback onPress={() => {}}>
+          <View style={{ position: "relative", bottom:20, height: 40, width: "80%", left: "10%", backgroundColor: "#004275", justifyContent: 'space-between', alignItems: "center", borderRadius: 15 }}>
+            <Text style={{ marginTop: 7, fontSize: 20, fontWeight: "600", color: "white" }}>
+              Join Workout
+            </Text>
+          </View>
+      </TouchableWithoutFeedback>
 
     </View>
   );
@@ -34,8 +43,8 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 36,
-    fontWeight: "600",
-    marginBottom: 48
+    fontWeight: "500",
+    marginBottom: 36
   },
   textInput: {
     height: 40,
