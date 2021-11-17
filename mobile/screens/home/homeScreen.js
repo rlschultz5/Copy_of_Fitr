@@ -35,7 +35,7 @@ export default function HomeScreen({ navigation }) {
       setLoading(true);
       let extractedFilter = {};
       for(let key in filter) {
-        if(filter[key].value != -1 && filter[key] != "" ) {
+        if( filter[key] && filter[key].value != -1 && filter[key] != "" ) {
           extractedFilter[key] = filter[key].label;
         }
       }
