@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, Component, Dropdown } from 'react';
 // import axios from "axios";
 import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, ScrollView, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import API from "../../api";
 import { AuthContext } from '../../contexts/authContext';
+// import 'bootstrap/dist/css/bootstrap.min.css'; // New
+import DropdownButton from 'react-bootstrap/DropdownButton'; // New
+// import Dropdown from 'react-bootstrap/Dropdown'  // New
 const CreateWorkout = ({ navigation }) => {
   const [activity, setActivity] = useState(null);
   const [experience, setExperience] = useState(null);
@@ -17,7 +20,7 @@ const CreateWorkout = ({ navigation }) => {
   const [isError, setError] = useState(false);
 
   const setLoggedIn = React.useContext(AuthContext);
-
+  const DropDown = require('react-native-dropdown'); // new
   const onSubmit = async () => {
 
     if(activity == null|| experience == null || length == null || dateAndTime == null || location == null || minPeople == null || maxPeople == null ) {
@@ -77,8 +80,10 @@ const CreateWorkout = ({ navigation }) => {
           <View style={styles.inner}>
             <Text style={styles.header}>Fitr</Text>
             <View>
-              <Text></Text>
-              <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setActivity} value={activity} placeholder="Activity (TODO: dropdown list)" style={styles.textInput} />
+              {/* <Text></Text> */}
+              {/* <Dropdown1 onSelect={setActivity} value={activity} placeholder="Activity" style={styles.textInput} /> */}
+              {/* <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setActivity} value={activity} placeholder="Activity (TODO: dropdown list)" style={styles.textInput} /> */}
+              
               <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setExperience} value={experience} placeholder="Experience (TODO: dropdown list)" style={styles.textInput} />
               <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setLength} value={length} placeholder="Length (TODO: dropdown list)" style={styles.textInput} />
               <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setDateAndTime} value={dateAndTime} placeholder="Date and Time (TODO: clock implementation)" style={styles.textInput} />
@@ -98,6 +103,25 @@ const CreateWorkout = ({ navigation }) => {
 }
 
 export default CreateWorkout;
+
+// class Dropdown1 extends Component {
+//   render() {
+//     let data = [{
+//       value: 'Banana',
+//     }, {
+//       value: 'Mango',
+//     }, {
+//       value: 'Pear',
+//     }];
+
+//     return (
+//       <Dropdown
+//       label='Favorite Fruit'
+//       data={data}
+//       />
+//     )
+//   }
+// }
 
 const styles = StyleSheet.create({
   container: {
