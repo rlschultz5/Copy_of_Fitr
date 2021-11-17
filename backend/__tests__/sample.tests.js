@@ -23,7 +23,7 @@ describe("Authentication Tests", () => {
     })
     describe("POST Signup", () => {
         it("should return success message", async () => {
-            const username = "randomusername"; // this will need to be changed after being run once, since username exists
+            const username = "randomusername"; 
             const password = "password";
             try {
                 await request(app)

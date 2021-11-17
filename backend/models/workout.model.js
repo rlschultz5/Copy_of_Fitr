@@ -9,10 +9,11 @@ const Workout = mongoose.model(
             ref: "Activity",
             required: true
         },
+        description: String,
         location: String,
         minPeople: {type: Number, required: true},
         maxPeople: {type: Number},
-        date: Date,
+        date: {type: Date, require: true},
         experienceLevel: {
             type: mongoose.Schema.Types.String,
             ref: "Experience",
@@ -23,7 +24,7 @@ const Workout = mongoose.model(
             ref: "WorkoutLength",
             required: true
         },
-        user_id: {
+        creator_id: {
             type: mongoose.Schema.Types.ObjectID,
             ref: "User"
         },
