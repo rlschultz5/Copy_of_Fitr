@@ -1,6 +1,6 @@
 const express = require('express');
-const passport = require('passport')
-const dbConfig = require("./config/db.config")
+const passport = require('passport');
+const dbConfig = require("./config/db.config");
 
 const app = express();
 
