@@ -5,7 +5,8 @@ const randomTitle = require("random-title");
 const randomDate = require("random-date-generator");
 
 const db = require("../models");
-const User = db.user; 
+const User = db.user;
+const Workout = db.workout;
 
 const activities = [
     "Basketball",
@@ -33,7 +34,7 @@ const experienceLevels = [
 const lengths = [30, 60, 90, 120, 150, 180];
 
 describe("Workout Tests", () => {
-    describe("POST Create Workout", () => {
+    describe("POST Create New Workout", () => {
         it("should return success message", async () => {
             const user = await User.findOne();
             console.log(user)
@@ -59,6 +60,22 @@ describe("Workout Tests", () => {
             expect(response.statusCode).toBe(200);
             expect(response.body).toHaveProperty("message");
             expect(response.body.message).toBe("Workout successfully created");
+        })
+    })
+    describe("GET Get Existing Workout", () => {
+        it("should return success message and workout details", async () => {
+            try {
+                const workout = await Workout.findOne();
+                const response = await request(app)
+                .get("/api/workout/get")
+                .query({id: workout._id});
+            expect(response.statusCode).toBe(200);
+            expect(response.body).toHaveProperty("data");
+            expect(response.body.data).toHaveProperty("_id");
+            } catch (err) {
+                console.log(err);
+                console.log("error occurred");
+            }
         })
     })
 })

@@ -68,7 +68,7 @@ const run = async () => {
     }
     console.log("All workouts added")
     try {
-        mongoose.connection.close();
+        db.mongoose.connection.close();
     } catch (err) {
         console.log(err);
         console.log("error when closing connection")
