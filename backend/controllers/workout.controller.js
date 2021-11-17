@@ -1,7 +1,7 @@
 const db = require("../models");
 const Workout = db.workout;
 
-// gets workout by _id
+// gets workout by id
 exports.getWorkout = async (req, res) => {
     if (!req.query.id) {
         res.status(500).send({error: "No ID was sent"});
@@ -73,9 +73,11 @@ exports.createWorkout = async (req, res) => {
             maxPeople: req.body.maxPeople,
             experienceLevel: req.body.experienceLevel,
             length: req.body.length,
-            user_id: req.body.creator_id,
+            creator_id: req.body.creator_id,
             memberCount: 1,
-            isFull: isFull
+            membersAttending: req.body.membersAttending,
+            isFull: isFull,
+            description: req.body.description
         }
         const workout = await new Workout(workoutObj).save()
         if (!workout) {
@@ -112,6 +114,12 @@ exports.getWorkouts = async (req, res) => {
     if (!req.body) {
         res.status(500).send({error: "No fields provided"});
     }
+    console.log(req.body.fields);
+    let fields = req.body.fields;
+    fields["minPeople"] = {$gte: req.body.fields.minPeople};
+    fields["maxPeople"] = {$lte: req.body.fields.maxPeople};
+    console.log(fields);
+
     try {
         const data = await Workout.find(req.body.fields);
         console.log(req.body.fields);
