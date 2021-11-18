@@ -39,7 +39,8 @@ exports.signIn = async (req, res) => {
                         const token = jwt.sign({username: user.username}, 'supersecretkey'); //temp key?
                         res.send({
                             message: info.message,
-                            token: token
+                            token: token,
+                            data: user
                         })
                     })
                 }
