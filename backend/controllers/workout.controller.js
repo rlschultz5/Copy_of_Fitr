@@ -1,5 +1,6 @@
 const db = require("../models");
 const Workout = db.workout;
+const User = db.user;
 
 // gets workout by _id
 exports.getWorkout = async (req, res) => {
@@ -78,6 +79,15 @@ exports.createWorkout = async (req, res) => {
             isFull: isFull
         }
         const workout = await new Workout(workoutObj).save()
+
+        let retrieveUser = await User.findOne({_id: req.body.creator_id})
+        const newWorkoutList = [...retrieveUser.createdWorkouts, workout._id]
+        let options = {new: true};
+        let update = {
+          createdWorkouts: newWorkoutList
+        }
+        let userupdate = await User.findOneAndUpdate({_id: req.body.creator_id}, update, options);
+
         if (!workout) {
             console.log("err when saving");
             res.status(500).send({error: "Error occurred when creating workout"});
