@@ -29,7 +29,7 @@ You need to first go into the 'backend' folder.\
 Then, install all dependencies (Skip this step if already ran it)\
 `npm install` \
 Finally, run the server\
-`node app.js`
+`node server.js`
 
 #### Mobile
 In **another terminal**, we will run the mobile app host.\
