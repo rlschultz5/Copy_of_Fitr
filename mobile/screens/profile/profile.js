@@ -29,18 +29,21 @@ export default function ProfileScreen({navigation}) {
         <Text style={styles.title}>John's Profile</Text>
       </View>   
       <ProfileList data={DUMMY} /> 
-      <Pressable onPress={()=>navigation.navigate("changePassword")}>
-        <Text style={{marginBottom:20}}>
+      <Pressable style={{backgroundColor:"#004275", justifyContent:"center",height:50, margin:5, marginTop: 15, borderRadius:10}}
+      onPress={()=>navigation.navigate("changePassword")}>
+        <Text style={{color:"white", alignSelf:"center", fontWeight:"500", fontSize:15}}>
           Change Password
         </Text>
       </Pressable>  
-      <Pressable onPress={()=>navigation.navigate("Login")}>
-        <Text style={{marginBottom:20}}>
+      <Pressable style={{backgroundColor:"#004275", justifyContent:"center",height:50, margin:5, marginTop: 15, borderRadius:10}}
+        onPress={()=>setLoggedIn(false)}>
+        <Text style={{color:"white", alignSelf:"center", fontWeight:"500", fontSize:15}}>
           Delete Account
         </Text>
       </Pressable> 
-      <Pressable onPress={()=>setLoggedIn(false)}>
-        <Text style={{marginBottom:20}}>
+      <Pressable style={{backgroundColor:"#004275", justifyContent:"center",height:50, margin:5, marginTop: 15, borderRadius:10}}
+      onPress={()=>setLoggedIn(false)}>
+        <Text style={{color:"white", alignSelf:"center", fontWeight:"500", fontSize:15}}>
           Logout
         </Text>
       </Pressable> 
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop:50,
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
   },
   title: {
     fontSize: 20,
