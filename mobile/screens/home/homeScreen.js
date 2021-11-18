@@ -6,6 +6,8 @@ import Filter from './filter';
 import { Ionicons } from '@expo/vector-icons';
 import API from "../../api.js"
 import axios from "axios";
+import AnimatedLoader from "react-native-animated-loader";
+
 
 const DUMMY = [{
   title: "4v4 Basketball at the Nick!",
@@ -39,6 +41,7 @@ export default function HomeScreen({ navigation }) {
           extractedFilter[key] = filter[key].label;
         }
       }
+      
       console.log(extractedFilter);
       try{
       const res = await axios.post(`http://${API}:8080/api/workout/getWorkouts`, {
@@ -93,7 +96,9 @@ export default function HomeScreen({ navigation }) {
       <Filter visible={showFilter} setVisible={setShowFilter} filter={filter} setFilter={setFilter} />
 
       {(loading)?
-  (<Text> Loading... </Text>):<WorkoutList data={workouts} navigation={navigation}/>}
+  (
+    <Text> Loading... </Text>
+  ):<WorkoutList data={workouts} navigation={navigation}/>}
 
       <StatusBar style="auto" />
     </View>
@@ -101,6 +106,10 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  lottie: {
+    width: 100,
+    height: 100
+  },
   grid: {
     padding: "5%",
     paddingBottom: "3%",
