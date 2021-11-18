@@ -63,7 +63,7 @@ const authScreen = ({ navigation }) => {
           </View>
           {(isError)?(<Text style={{color:"blue"}}>* Login Failed. The credentials do not match.</Text>):<Text/>}
           <View style={styles.btnContainer}>
-            <Button color="white" title="Submit" disabled={isLoading} onPress={() => {onSubmit()}} />
+            <Button color="white" title="Submit" disabled={isLoading} onPress={() => onSubmit()} />
             <Button color="white" title="Forgot your password?" onPress={() => navigation.navigate('Forgot Password')} />
             <Button color="white" title="Don't have an account?" onPress={() => navigation.navigate('Signup')} />
           </View>
