@@ -126,8 +126,8 @@ exports.getWorkouts = async (req, res) => {
     }
     console.log(req.body.fields);
     let fields = req.body.fields;
-    fields["minPeople"] = {$gte: req.body.fields.minPeople};
-    fields["maxPeople"] = {$lte: req.body.fields.maxPeople};
+    if(req.body.fields.minPeople) fields["minPeople"] = {$gte: req.body.fields.minPeople};
+    if(req.body.fields.minPeople) fields["maxPeople"] = {$lte: req.body.fields.maxPeople};
     console.log(fields);
 
     try {
