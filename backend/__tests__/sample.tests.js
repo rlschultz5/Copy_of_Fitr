@@ -23,13 +23,44 @@ describe("Authentication Tests", () => {
     })
     describe("POST Signup", () => {
         it("should return success message", async () => {
-            const username = "randomusername"; // this will need to be changed after being run once, since username exists
+            const username = "randomusername"; 
             const password = "password";
+            try {
+                await request(app)
+                .delete("/api/deleteAccount")
+                .send({username: username, password: password});
+            } catch (err) {
+                console.log('account not found');
+                console.error(err);
+            }
             const response = await request(app)
                 .post("/api/signup")
                 .send({username: username, password: password});
             expect(response.statusCode).toBe(200);
             expect(response.body.message).toBe("New user successfully created!")
+        })
+    })
+    describe("POST Delete Account", () => {
+        it("should return success message and deleted count", async () => {
+            const username = "test_user";
+            const password = "password";
+            try {
+                await request(app)
+                .post("/api/signup")
+                .send({username: username, password: password});
+            } catch (err) {
+                console.log('account already exists');
+                console.error(err);
+            }
+            const response = await request(app)
+                .delete("/api/deleteAccount")
+                .send({username: username, password: password});
+            expect(response.statusCode).toBe(200);
+            expect(response.body.message).toBe("User " + username + " deleted successfully");
+            expect(response.body).toHaveProperty("data");
+            expect(response.body.data).toHaveProperty("deletedCount");
+            expect(response.body.data.deletedCount).toBeGreaterThan(0);
+
         })
     })
 })

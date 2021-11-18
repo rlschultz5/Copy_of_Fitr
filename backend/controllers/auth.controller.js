@@ -1,5 +1,6 @@
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
 
 const db = require("../models");
 const User = db.user;
@@ -38,7 +39,8 @@ exports.signIn = async (req, res) => {
                         const token = jwt.sign({username: user.username}, 'supersecretkey'); //temp key?
                         res.send({
                             message: info.message,
-                            token: token
+                            token: token,
+                            data: user
                         })
                     })
                 }
@@ -76,8 +78,9 @@ exports.deleteAccount = async (req, res) => {
         if (!user) {
             res.status(401).send({error: "Username not found"});
         }
-        const password = user.password;
-        if (req.body.password !== password) {
+        const hashedPassword = user.password;
+        const compare = await bcrypt.compare(req.body.password, hashedPassword)
+        if (!compare) {
             res.status(401).send({error: "Invalid password provided"});
         } else {
             let response = await User.deleteOne({username: req.body.username});

@@ -5,9 +5,11 @@ const Admin = mongoose.model(
     new mongoose.Schema({
         user_id: {
           type: mongoose.Schema.Types.ObjectID,
-          ref: "User"
+          ref: "User",
+          unique: true,
+          required: true
       },
-        email: String
+        email: {type: String, unique: true, required: true}
     })
 )
 
