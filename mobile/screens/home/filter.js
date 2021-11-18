@@ -3,25 +3,35 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Modal, Pressable, TextInput, ScrollView} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from 'react-native-woodpicker'
+import { DatePicker } from 'react-native-woodpicker'
+
 import CheckBox from 'react-native-check-box'
 
 
 
-export default function Filter({ visible, setVisible }) {
-    const [pickedSports, setSports] = useState();
-    const [pickedEL, setEL] = useState();
+export default function Filter({ visible, setVisible, filter, setFilter }) {
+    const [pickedSports, setSports] = useState(filter.activity);
+    const [pickedEL, setEL] = useState(filter.experienceLevel);
     const [pickedGender, setGender] = useState();
     const [isChecked, setIsChecked] = useState(false);
 
+
+    const closeModule = () => {
+        setFilter({activity: pickedSports, experienceLevel: pickedEL})
+        console.log(filter);
+        setVisible(false)
+    }
+
+
     const SPORTS = [
-        { label: "Basketball", value: 1 },
-        { label: "Volleyball", value: 2 },]
+        { label: "All", value: -1 },
+        { label: "Basketball", value: 2 },
+        { label: "Volleyball", value: 3 },]
 
     const EXPERIENCE_LEVEL = [
-        { label: "All", value: 1 },
-        { label: "Beginner", value: 2 },
-        { label: "Intermediate", value: 3 },
-        { label: "Advanced", value: 4 },
+        { label: "All", value: -1 },
+        { label: "Casual", value: 1 },
+        { label: "Competitive", value: 2 },
     ]
 
     const GENDERS = [
@@ -41,7 +51,7 @@ export default function Filter({ visible, setVisible }) {
 
 
                 <View style={filterStyle.container}>
-                    <Pressable style={filterStyle.closeButton} onPress={() => setVisible(false)}>
+                    <Pressable style={filterStyle.closeButton} onPress={() => closeModule()}>
                         <Ionicons name='ios-close-outline' size={32} color="gray" />
                     </Pressable>
                     <View style={filterStyle.textContainer}>
