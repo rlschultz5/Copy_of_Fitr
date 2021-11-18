@@ -4,9 +4,8 @@ import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, Scro
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import API from "../../api";
 import { AuthContext } from '../../contexts/authContext';
-// import 'bootstrap/dist/css/bootstrap.min.css'; // New
-import DropdownButton from 'react-bootstrap/DropdownButton'; // New
-// import Dropdown from 'react-bootstrap/Dropdown'  // New
+import { Picker } from '@react-native-picker/picker'
+
 const CreateWorkout = ({ navigation }) => {
   const [activity, setActivity] = useState(null);
   const [experience, setExperience] = useState(null);
@@ -19,8 +18,9 @@ const CreateWorkout = ({ navigation }) => {
   const [authStatus, setAuthStatus] = useState("NA");
   const [isError, setError] = useState(false);
 
+  const [pickerValue, setPickerValue] = useState('JavaScript');
+
   const setLoggedIn = React.useContext(AuthContext);
-  const DropDown = require('react-native-dropdown'); // new
   const onSubmit = async () => {
 
     if(activity == null|| experience == null || length == null || dateAndTime == null || location == null || minPeople == null || maxPeople == null ) {
@@ -80,10 +80,17 @@ const CreateWorkout = ({ navigation }) => {
           <View style={styles.inner}>
             <Text style={styles.header}>Fitr</Text>
             <View>
-              {/* <Text></Text> */}
-              {/* <Dropdown1 onSelect={setActivity} value={activity} placeholder="Activity" style={styles.textInput} /> */}
+              <Text></Text>
               {/* <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setActivity} value={activity} placeholder="Activity (TODO: dropdown list)" style={styles.textInput} /> */}
-              
+              <Picker 
+                style={styles.picker}
+                selectedValue={pickerValue}
+                onValueChange={ (itemValue) => setPickerValue(itemValue) }
+                >
+                <Picker.Item label="JavaScript" value="JavaScript" />
+                <Picker.Item label="Java" value="Java" />
+                <Picker.Item label="C#" value="c#" />
+              </Picker>
               <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setExperience} value={experience} placeholder="Experience (TODO: dropdown list)" style={styles.textInput} />
               <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setLength} value={length} placeholder="Length (TODO: dropdown list)" style={styles.textInput} />
               <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setDateAndTime} value={dateAndTime} placeholder="Date and Time (TODO: clock implementation)" style={styles.textInput} />
@@ -103,25 +110,6 @@ const CreateWorkout = ({ navigation }) => {
 }
 
 export default CreateWorkout;
-
-// class Dropdown1 extends Component {
-//   render() {
-//     let data = [{
-//       value: 'Banana',
-//     }, {
-//       value: 'Mango',
-//     }, {
-//       value: 'Pear',
-//     }];
-
-//     return (
-//       <Dropdown
-//       label='Favorite Fruit'
-//       data={data}
-//       />
-//     )
-//   }
-// }
 
 const styles = StyleSheet.create({
   container: {
@@ -147,6 +135,14 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     marginTop: 12
+  },
+  picker: { // new
+    width: 300,
+    height: 45,
+    borderColor: 'blue',
+    borderWidth: 2,
+    backgroundColor: 'grey',
+    color: 'white'
   }
 });
 
