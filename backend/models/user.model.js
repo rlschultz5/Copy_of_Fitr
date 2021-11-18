@@ -14,13 +14,6 @@ const userSchema = new mongoose.Schema({
     ref: "SchoolYear"
   },
   activities: Array,
-  preferences: {
-    activitiesExperience : Array,
-    timeAvailability: {
-      type: mongoose.Schema.Types.ObjectID,
-      ref: "Availability"
-    }
-  },
   isAdmin: Boolean,
   createdWorkouts: [{
     type: mongoose.Schema.Types.ObjectID,
