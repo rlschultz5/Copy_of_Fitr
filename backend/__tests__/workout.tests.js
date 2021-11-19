@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const randomTitle = require("random-title");
 const randomDate = require("random-date-generator");
 
+const dbConfig = require("../config/db.config")
+
 const db = require("../models");
 const User = db.user;
 const Workout = db.workout;
@@ -32,6 +34,22 @@ const experienceLevels = [
 ];
 
 const lengths = [30, 60, 90, 120, 150, 180];
+
+beforeAll(async () => {
+    try {
+        await mongoose.connect(dbConfig.CONNECTION_STRING, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        console.log("Connected to database");
+    } catch (err) {
+        console.log("Error occurred when connecting to database");
+    }
+})
+
+afterAll(async () => {
+    await mongoose.connection.close();
+})
 
 describe("Workout Tests", () => {
     describe("POST Create New Workout", () => {
@@ -83,26 +101,34 @@ describe("Workout Tests", () => {
     describe("POST Edit existing workout", () => {
         it("should return correct updated workout details", async () => {
             try {
-                const workout = await Workout.findOne();
+                const count = await Workout.count();
+                const workout = await Workout.findOne().skip(Math.floor(Math.random() * count));
                 const update = {location: (workout.location === "The Nick") ? "The Shell" : "The Nick"}
                 const data = {
                     id: workout._id,
                     update: update
                 }
-                console.log(data);
                 const response = await request(app)
                     .post("/api/workout/edit")
                     .send(data);
                 console.log(response.body);
+                expect(response.statusCode).toBe(200);
             } catch (err) {
                 console.log(err);
                 console.log("error occurred");
             }
         })
     })
+
+    describe("POST Get workout(s) matching fields", () => {
+        it("should return message saying no match, or details of matching workouts", async () => {
+            try {
+                
+            } catch (err) {
+                console.log(err);
+
+            }
+        })
+    })
 })
 
-afterAll(done => {
-    mongoose.connection.close();
-    done();
-})

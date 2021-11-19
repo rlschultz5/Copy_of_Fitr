@@ -72,6 +72,7 @@ exports.createWorkout = async (req, res) => {
             location: req.body.location,
             minPeople: req.body.minPeople,
             maxPeople: req.body.maxPeople,
+            date: req.body.date,
             experienceLevel: req.body.experienceLevel,
             length: req.body.length,
             creator_id: req.body.creator_id,
@@ -169,7 +170,7 @@ exports.isFull = async (req, res) => {
     }
 }
 
-exports.getAtendees = async (req, res) => {
+exports.getAttendees = async (req, res) => {
     if (!req.body.workout_id) {
         res.status(500).send({error: "No workout_id provided"});
     }
