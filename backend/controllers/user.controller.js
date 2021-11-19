@@ -151,6 +151,7 @@ exports.joinWorkout = async (req, res) => {
 
   try{
     let retrieveUser = await User.findOne({_id: req.body.user_id})
+    console.log(req.body);
     let retrieveWorkout = await Workout.findOne({_id: req.body.workout_id})
     const newWorkoutList = [...retrieveUser.attendingWorkouts, req.body.workout_id]
     const newMemberList = [...retrieveWorkout.membersAttending, req.body.user_id]
