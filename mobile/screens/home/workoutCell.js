@@ -19,7 +19,7 @@ export default function WorkoutCell({navigation, data}) {
 
 const cellStyle = StyleSheet.create({
   container: {
-    width:"80%",
+    width:"85%",
     padding:15,
     borderColor:"grey",
     borderWidth:1,
