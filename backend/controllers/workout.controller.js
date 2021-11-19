@@ -97,7 +97,6 @@ exports.createWorkout = async (req, res) => {
                 console.log("err when updating user workouts");
                 return res.status(500).send({error: "Error occurred when creating workout"});
             }
-    
             if (!workout) {
                 console.log("err when saving");
                 res.status(500).send({error: "Error occurred when creating workout"});
@@ -164,11 +163,11 @@ exports.getWorkouts = async (req, res) => {
 }
 
 exports.isFull = async (req, res) => {
-    if (!req.body.id) {
+    if (!req.query.id) {
         res.status(500).send({error: "ID not provided"});
     } else {
         try {
-            const data = await Workout.findById({_id: req.body.id}).select('isFull');
+            const data = await Workout.findById({_id: req.query.id}).select('isFull');
             console.log(data);
             if (!data) {
                 res.status(500).send({error: "Provided workout not found"});
@@ -183,11 +182,11 @@ exports.isFull = async (req, res) => {
 }
 
 exports.getAttendees = async (req, res) => {
-    if (!req.body.workout_id) {
+    if (!req.query.id) {
         res.status(500).send({error: "No workout_id provided"});
     } else {
         try {
-            const data = await Workout.findOne({_id: req.body.workout_id});
+            const data = await Workout.findOne({_id: req.query.id});
             console.log(data);
             if (data.length == 0) {
                 res.status(500).send({error: "No matching workout found"});
