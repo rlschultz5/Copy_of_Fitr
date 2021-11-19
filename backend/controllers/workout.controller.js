@@ -126,8 +126,15 @@ exports.getWorkouts = async (req, res) => {
     }
     console.log(req.body.fields);
     let fields = req.body.fields;
-    if(req.body.fields.minPeople) fields["minPeople"] = {$gte: req.body.fields.minPeople};
-    if(req.body.fields.minPeople) fields["maxPeople"] = {$lte: req.body.fields.maxPeople};
+    if (fields["minPeople"]) fields["minPeople"] = {$gte: req.body.fields.minPeople};
+    if (fields["maxPeople"]) fields["maxPeople"] = {$lte: req.body.fields.maxPeople};
+    if (fields["date"]) {
+        console.log(fields.date.substring(0, 10));
+        const dateArray = fields.date.substring(0, 10).split('-');
+        console.log(dateArray)
+        fields["date"] = {$gte: new Date(parseInt(dateArray[0]), parseInt(dateArray[1]) - 1, parseInt(dateArray[2])),
+                          $lt: new Date(parseInt(dateArray[0]), parseInt(dateArray[1]) - 1, parseInt(dateArray[2]) + 1)}
+    }
     console.log(fields);
 
     try {
