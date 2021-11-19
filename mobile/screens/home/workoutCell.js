@@ -8,9 +8,9 @@ export default function WorkoutCell({navigation, data}) {
           <Pressable style={{width:"100%"}} onPress={()=>{navigation.navigate("Detail", {workout: data})}}>
 
       <Text style={{fontWeight:"600", fontSize:16, marginBottom:15}}>{data.title}</Text>
-      <Text>{data.sports}</Text>
-      <Text>{`Experience Level: ${data.level}`}</Text>
-      <Text>{`${data.filled}/${data.capacity}`}</Text>
+      <Text style={cellStyle.highlight}>{data.activity}</Text>
+      <Text>{`Experience Level: ${data.experienceLevel}`}</Text>
+      <Text>{`Capacity: ${data.membersAttending.length} / ${data.maxPeople}`}</Text>
       </Pressable>
 
     </View>
@@ -19,7 +19,7 @@ export default function WorkoutCell({navigation, data}) {
 
 const cellStyle = StyleSheet.create({
   container: {
-    width:"80%",
+    width:"85%",
     padding:15,
     borderColor:"grey",
     borderWidth:1,
@@ -31,5 +31,10 @@ const cellStyle = StyleSheet.create({
   },
   title: {
       
+  }
+  ,
+  highlight: {
+    fontWeight:"600",
+    color: "#e6006b"
   }
 });

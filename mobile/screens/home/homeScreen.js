@@ -6,6 +6,10 @@ import Filter from './filter';
 import { Ionicons } from '@expo/vector-icons';
 import API from "../../api.js"
 import axios from "axios";
+import AnimatedLoader from "react-native-animated-loader";
+import LottieView from 'lottie-react-native';
+
+
 
 const DUMMY = [{
   title: "4v4 Basketball at the Nick!",
@@ -35,17 +39,19 @@ export default function HomeScreen({ navigation }) {
       setLoading(true);
       let extractedFilter = {};
       for(let key in filter) {
-        if( filter[key] && filter[key].value != -1 && filter[key] != "" ) {
+        if(filter[key] instanceof Date) extractedFilter[key] = filter[key]
+        else if(filter[key] !== 'object' && filter[key] === true)  extractedFilter[key] = false;
+        else if( filter[key] && filter[key].value != -1 && filter[key] != "") {
           extractedFilter[key] = filter[key].label;
         }
       }
+      
       console.log(extractedFilter);
       try{
       const res = await axios.post(`http://${API}:8080/api/workout/getWorkouts`, {
         fields:extractedFilter
       });
       setWorkouts(res.data.data);
-      console.log(res.data.data)
       setLoading(false);
       } catch (e) {
         console.log(e.message);
@@ -57,6 +63,7 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+       
       <View style={styles.grid}>
         <View style={{ flex: 1, flexDirection: "row" }}>
           <Text style={{ fontSize: 30, fontWeight: "700" }}> Fitr </Text>
@@ -93,7 +100,10 @@ export default function HomeScreen({ navigation }) {
       <Filter visible={showFilter} setVisible={setShowFilter} filter={filter} setFilter={setFilter} />
 
       {(loading)?
-  (<Text> Loading... </Text>):<WorkoutList data={workouts} navigation={navigation}/>}
+  (
+
+    <LottieView style={{width:60, alignSelf:"center", top:"10%"}} speed={2} source={require("./loader.json")} autoPlay={true} loop={true}></LottieView>
+  ):<WorkoutList data={workouts} navigation={navigation}/>}
 
       <StatusBar style="auto" />
     </View>
@@ -101,6 +111,10 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  lottie: {
+    width: 100,
+    height: 100
+  },
   grid: {
     padding: "5%",
     paddingBottom: "3%",
@@ -132,6 +146,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   listContainer: {
-    padding: 20,
+    padding: 10,
   }
 });

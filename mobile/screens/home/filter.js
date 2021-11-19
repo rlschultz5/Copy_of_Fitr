@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Modal, Pressable, TextInput, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, Modal, Pressable, TextInput, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from 'react-native-woodpicker'
 import { DatePicker } from 'react-native-woodpicker'
@@ -14,11 +14,14 @@ export default function Filter({ visible, setVisible, filter, setFilter }) {
     const [pickedEL, setEL] = useState(filter.experienceLevel);
     const [pickedGender, setGender] = useState();
     const [isChecked, setIsChecked] = useState(false);
+    const [pickedDate, setPickedDate] = useState();
 
+  const handleText = () => pickedDate
+      ? pickedDate.toDateString()
+      : "Select Date";
 
     const closeModule = () => {
-        setFilter({activity: pickedSports, experienceLevel: pickedEL})
-        console.log(filter);
+        setFilter({ activity: pickedSports, experienceLevel: pickedEL, isFull: isChecked, date: pickedDate })
         setVisible(false)
     }
 
@@ -29,9 +32,10 @@ export default function Filter({ visible, setVisible, filter, setFilter }) {
         { label: "Volleyball", value: 3 },]
 
     const EXPERIENCE_LEVEL = [
-        { label: "All", value: -1 },
+        { label: "Any", value: -1 },
         { label: "Casual", value: 1 },
-        { label: "Competitive", value: 2 },
+        { label: "Intermediate", value: 2 },
+        { label: "Competitive", value: 3 },
     ]
 
     const GENDERS = [
@@ -59,59 +63,56 @@ export default function Filter({ visible, setVisible, filter, setFilter }) {
                         <Text>Set filters for your workouts!</Text>
                     </View>
                     <ScrollView>
-                    <View style={filterStyle.grid}>
-                        <Text style={{ flex: 1 }}>Sports</Text>
-                        <Picker
-                            containerStyle={filterStyle.picker}
-                            item={pickedSports}
-                            items={SPORTS}
-                            onItemChange={setSports}
-                            title="Pick your sports"
-                            placeholder="All"
-                            style={{ flex: 1, textAlign: "right" }}
-                            isNullable
+                        <View style={filterStyle.grid}>
+                            <Text style={{ flex: 1 }}>Sports</Text>
+                            <Picker
+                                containerStyle={filterStyle.picker}
+                                item={pickedSports}
+                                items={SPORTS}
+                                onItemChange={setSports}
+                                title="Pick your sports"
+                                placeholder="All"
+                                style={{ flex: 1, textAlign: "right" }}
+                                isNullable
+                            />
+                        </View>
+                        <View style={filterStyle.grid}>
+                            <Text style={{ flex: 1 }}>Date</Text>
+                            <DatePicker
+                                containerStyle={filterStyle.picker}
+                                value={pickedDate}
+                                onDateChange={setPickedDate}
+                                title="Date Picker"
+                                text={handleText()}
+                                isNullable={false}
+                                iosDisplay="inline"
+                                style={{ flex: 1, textAlign: "right" }}
+                            />
+                        </View>
+
+                        <View style={filterStyle.grid}>
+                            <Text style={{ flex: 1 }}>Experience Level</Text>
+                            <Picker
+                                containerStyle={filterStyle.picker}
+                                item={pickedEL}
+                                items={EXPERIENCE_LEVEL}
+                                onItemChange={setEL}
+                                title="Pick your experience level"
+                                placeholder="Any"
+                                style={{ flex: 1, textAlign: "right" }}
+                                isNullable
+                            />
+                        </View>
+
+                        <CheckBox
+                            style={{ flex: 1, padding: "10%" }}
+                            onClick={() => {
+                                setIsChecked(!isChecked)
+                            }}
+                            isChecked={isChecked}
+                            leftText={"Show only available workouts"}
                         />
-                    </View>
-                    <View style={filterStyle.grid}>
-                        <Text style={{ flex: 1 }}>Experience Level</Text>
-                        <Picker
-                            containerStyle={filterStyle.picker}
-                            item={pickedEL}
-                            items={EXPERIENCE_LEVEL}
-                            onItemChange={setEL}
-                            title="Pick your experience level"
-                            placeholder="Any"
-                            style={{ flex: 1, textAlign: "right" }}
-                            isNullable
-                        />
-                    </View>
-                    <View style={filterStyle.grid}>
-                        <Text style={{ flex: 1 }}>Gender Specific?</Text>
-                        <Picker
-                            containerStyle={filterStyle.picker}
-                            item={pickedGender}
-                            items={EXPERIENCE_LEVEL}
-                            onItemChange={setGender}
-                            title="Choose your gender filter"
-                            placeholder="No"
-                            style={{ flex: 1, textAlign: "right" }}
-                            isNullable
-                        />
-                    </View>
-                    <View style={filterStyle.grid}>
-                        <Text style={{ flex: 1 }}>Capacity</Text>
-                        <Text keyboardType="numeric" style={{ flex: 1, textAlign: "right" }}>N/A</Text>
-                    </View>
-                    
-                    <CheckBox
-    style={{flex: 1, padding: "10%"}}
-    onClick={()=>{
-      setIsChecked(!isChecked)
-    }}
-    isChecked={isChecked}
-    leftText={"CheckBox"}
-/>
-</ScrollView>
+                    </ScrollView>
 
 
 
