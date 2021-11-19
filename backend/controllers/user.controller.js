@@ -143,3 +143,34 @@ exports.getAttendingWorkouts = async (req, res) => {
     res.status(500).send({message: err})
   }
 }
+
+exports.joinWorkout = async (req, res) => {
+  if (!req.body.user_id || !req.body.workout_id) {
+    res.status(500).send({message: "No user_id or workout_id was provided."})
+  }
+
+  try{
+    let retrieveUser = await User.findOne({_id: req.body.user_id})
+    let retrieveWorkout = await Workout.findOne({_id: req.body.workout_id})
+    const newWorkoutList = [...retrieveUser.attendingWorkouts, req.body.workout_id]
+    const newMemberList = [...retrieveWorkout.membersAttending, req.body.user_id]
+
+    let updateWorkout = {
+      membersAttending: newMemberList
+    }
+    let updateUser = {
+      attendingWorkouts: newWorkoutList
+    }
+    let options = {new: true}
+
+    let foundUser = await User.findOneAndUpdate({_id: req.body.user_id}, updateUser, options);
+    let foundWorkout = await Workout.findOneAndUpdate({_id: req.body.workout_id}, updateWorkout, options);
+
+    console.log(foundUser)
+    console.log(foundWorkout)
+    res.status(200).send({message: "User has joined workout!"})
+  } catch (err) {
+    console.log(err)
+    res.status(500).send({message: err})
+  }
+}

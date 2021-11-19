@@ -1,9 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-// import axios from "axios";
+import axios from "axios";
 import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import API from "../../api";
+import API from "../../api";
 import { AuthContext } from '../../contexts/authContext';
 
 
@@ -17,36 +16,35 @@ const authScreen = ({ navigation }) => {
   const setLoggedIn = React.useContext(AuthContext);
 
 
-  // const onSubmit = async () => {
-  //   setIsLoading(true);
-  //   try {
+  const onSubmit = async () => {
+    setIsLoading(true);
+    try {
       
-  //     const res = await axios.post(`http://${API}:8080/api/signin`, { username: username, password: password });
-  //     setIsLoading(false);
+      const res = await axios.post(`http://${API}:8080/api/signin`, { username: username, password: password });
+      setIsLoading(false);
 
-  //     if (res.status != 200) {
-  //       setAuthStatus("denied");
-  //       setError(true);
-  //       console.log("denied");
-  //       return;
-  //     }
+      if (res.status != 200) {
+        setAuthStatus("denied");
+        setError(true);
+        console.log("denied");
+        return;
+      }
 
-  //     try {
-  //       await AsyncStorage.setItem('user', JSON.stringify(res.data))
-  //     } catch (e) {
-  //       // saving error
-  //     }
+      try {
+        await AsyncStorage.setItem('user', JSON.stringify(res.data.data))
+      } catch (e) {
+        // saving error
+      }
+      setLoggedIn(true);
 
-  //     navigation.navigate("MainNavigator", { screen: "Home" });
-
-  //   } catch (e) {
-  //     console.log(e.message);
-  //     setError(true);
-  //     setIsLoading(false);
-  //     setAuthStatus("denied");
-  //     return;
-  //   }
-  // }
+    } catch (e) {
+      console.log(e.message);
+      setError(true);
+      setIsLoading(false);
+      setAuthStatus("denied");
+      return;
+    }
+  }
 
   // Change Submit button to {onSubmit}
   // <Button color="white" title="Submit" disabled={isLoading} onPress={onSubmit} />
@@ -60,12 +58,12 @@ const authScreen = ({ navigation }) => {
         <View style={styles.inner}>
           <Text style={styles.header}>Fitr</Text>
           <View>
-            <TextInput placeholderTextColor="#ffc3b8" style ={styles.textInput}onChangeText={setUsername} value={username} placeholder="Username" style={styles.textInput} />
+            <TextInput placeholderTextColor="#ffc3b8" style ={styles.textInput} onChangeText={setUsername} value={username} placeholder="Username" style={styles.textInput} />
             <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={true} onChangeText={setPassword} value={password} placeholder="Password" style={styles.textInput} />
           </View>
           {(isError)?(<Text style={{color:"blue"}}>* Login Failed. The credentials do not match.</Text>):<Text/>}
           <View style={styles.btnContainer}>
-            <Button color="white" title="Submit" disabled={isLoading} onPress={() => setLoggedIn(true)} />
+            <Button color="white" title="Submit" disabled={isLoading} onPress={() => onSubmit()} />
             <Button color="white" title="Forgot your password?" onPress={() => navigation.navigate('Forgot Password')} />
             <Button color="white" title="Don't have an account?" onPress={() => navigation.navigate('Signup')} />
           </View>
