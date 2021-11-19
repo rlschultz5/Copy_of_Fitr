@@ -8,6 +8,23 @@ describe("basic sample test", () => {
     });
 });
 
+beforeAll(async () => {
+    try {
+        await mongoose.connect(dbConfig.CONNECTION_STRING, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        console.log("Connected to database");
+    } catch (err) {
+        console.log("Error occurred when connecting to database");
+    }
+})
+
+afterAll(async () => {
+    await mongoose.connection.close();
+})
+
+
 describe("Authentication Tests", () => {
     describe("POST Signin", () => {
         it("should return success message and token", async () => {
@@ -63,9 +80,4 @@ describe("Authentication Tests", () => {
 
         })
     })
-})
-
-afterAll(done => {
-    mongoose.connection.close();
-    done();
 })
