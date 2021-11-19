@@ -109,7 +109,7 @@ export default function Filter({ visible, setVisible, filter, setFilter }) {
       setIsChecked(!isChecked)
     }}
     isChecked={isChecked}
-    leftText={"CheckBox"}
+    leftText={"Show only available workouts"}
 />
 </ScrollView>
 

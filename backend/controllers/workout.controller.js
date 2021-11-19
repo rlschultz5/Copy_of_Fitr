@@ -1,5 +1,6 @@
 const db = require("../models");
 const Workout = db.workout;
+const User = db.user;
 
 // gets workout by id
 exports.getWorkout = async (req, res) => {
@@ -80,6 +81,15 @@ exports.createWorkout = async (req, res) => {
             description: req.body.description
         }
         const workout = await new Workout(workoutObj).save()
+
+        let retrieveUser = await User.findOne({_id: req.body.creator_id})
+        const newWorkoutList = [...retrieveUser.createdWorkouts, workout._id]
+        let options = {new: true};
+        let update = {
+          createdWorkouts: newWorkoutList
+        }
+        let userupdate = await User.findOneAndUpdate({_id: req.body.creator_id}, update, options);
+
         if (!workout) {
             console.log("err when saving");
             res.status(500).send({error: "Error occurred when creating workout"});
@@ -116,8 +126,8 @@ exports.getWorkouts = async (req, res) => {
     }
     console.log(req.body.fields);
     let fields = req.body.fields;
-    fields["minPeople"] = {$gte: req.body.fields.minPeople};
-    fields["maxPeople"] = {$lte: req.body.fields.maxPeople};
+    if(req.body.fields.minPeople) fields["minPeople"] = {$gte: req.body.fields.minPeople};
+    if(req.body.fields.minPeople) fields["maxPeople"] = {$lte: req.body.fields.maxPeople};
     console.log(fields);
 
     try {
