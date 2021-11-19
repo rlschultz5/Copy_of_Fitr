@@ -62,16 +62,38 @@ describe("Workout Tests", () => {
             expect(response.body.message).toBe("Workout successfully created");
         })
     })
+    
     describe("GET Get Existing Workout", () => {
         it("should return success message and workout details", async () => {
             try {
                 const workout = await Workout.findOne();
                 const response = await request(app)
-                .get("/api/workout/get")
-                .query({id: workout._id});
-            expect(response.statusCode).toBe(200);
-            expect(response.body).toHaveProperty("data");
-            expect(response.body.data).toHaveProperty("_id");
+                    .get("/api/workout/get")
+                    .query({id: workout._id});
+                expect(response.statusCode).toBe(200);
+                expect(response.body).toHaveProperty("data");
+                expect(response.body.data).toHaveProperty("_id");
+            } catch (err) {
+                console.log(err);
+                console.log("error occurred");
+            }
+        })
+    })
+
+    describe("POST Edit existing workout", () => {
+        it("should return correct updated workout details", async () => {
+            try {
+                const workout = await Workout.findOne();
+                const update = {location: (workout.location === "The Nick") ? "The Shell" : "The Nick"}
+                const data = {
+                    id: workout._id,
+                    update: update
+                }
+                console.log(data);
+                const response = await request(app)
+                    .post("/api/workout/edit")
+                    .send(data);
+                console.log(response.body);
             } catch (err) {
                 console.log(err);
                 console.log("error occurred");
