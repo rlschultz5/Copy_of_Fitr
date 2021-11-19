@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, SafeAreaView, ScrollView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
 // import { Checkbox } from 'react-native-paper';
 // import axios from "axios";
-// import API from "../../api";
+import API from "../../api";
+import { Picker } from 'react-native-woodpicker'
 
 
 const SignupScreen = ({ navigation }) => {
@@ -21,6 +22,13 @@ const SignupScreen = ({ navigation }) => {
   const [disabled, setDisabled] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [isError, setError] = useState(false);
+
+  const SCHOOLYEAR = [
+    { label: "Select School Year", value: -1 },
+    { label: "Freshman", value: 2 },
+    { label: "Sophomore", value: 3 },
+    { label: "Junior", value: 4 },
+    { label: "Senior", value: 5 },]
 
   const goHome = () => {
     navigation.navigate("Login");
@@ -105,7 +113,16 @@ const SignupScreen = ({ navigation }) => {
                 <TextInput onChangeText={setCity} value={city} placeholderTextColor="#ffc3b8" placeholder="City" style={styles.textInput} />
                 <TextInput onChangeText={setState} value={state} placeholderTextColor="#ffc3b8" placeholder="State" style={styles.textInput} />
                 <TextInput onChangeText={setZipcode} value={zipcode} placeholderTextColor="#ffc3b8" placeholder="Zipcode" style={styles.textInput} />
-                <TextInput onChangeText={setSchoolYear} value={schoolYear} placeholderTextColor="#ffc3b8" placeholder="School Year (will change to dropdown list)" style={styles.textInput} />
+                <Picker
+                  containerStyle={styles.picker}
+                  item={schoolYear}
+                  items={SCHOOLYEAR}
+                  onItemChange={setSchoolYear}
+                  title="School Year"
+                  placeholder="Select School Year"
+                  style={{ flex: 1, textAlign: "right" }}
+                  isNullable
+                />
                 <Text style={styles.label}>Optional:</Text>
                 <Text style={styles.label}></Text>
                 <TextInput onChangeText={setActivities} value={activities} placeholderTextColor="#ffc3b8" placeholder="(Activities Option To Be Implemented)" style={styles.textInput} />
@@ -171,5 +188,13 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     marginTop: 12
+  },
+  picker: { // new
+    width: 300,
+    height: 45,
+    borderColor: 'blue',
+    borderWidth: 2,
+    backgroundColor: 'grey',
+    color: 'white'
   }
 });
