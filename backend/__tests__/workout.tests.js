@@ -142,5 +142,72 @@ describe("Workout Tests", () => {
             }
         })
     })
+
+    describe("GET Get activity of given workout", () => {
+        it("should send activity of provided workout", async () => {
+            try {
+                const count = await Workout.count();
+                const workout = await Workout.findOne().skip(Math.floor(Math.random() * count));
+                const response = await request(app)
+                    .get("/api/workout/getActivity")
+                    .query({id: workout._id})
+                expect(response.statusCode).toBe(200);
+                expect(response.body).toHaveProperty("data");
+                expect(response.body.data).toHaveProperty("activity");
+                expect(activities).toContain(response.body.data.activity);
+            } catch (err) {
+                console.log(err);
+            }
+        })
+    })
+
+    describe("GET Check if given workout is full", () => {
+        it("should return if given workout is full or not", async () => {
+            try {
+                const count = await Workout.count();
+                const workout = await Workout.findOne().skip(Math.floor(Math.random() * count));
+                const response = await request(app)
+                    .get("/api/workout/isFull")
+                    .query({id: workout._id})
+                expect(response.statusCode).toBe(200);
+                expect(response.body).toHaveProperty("isFull");
+            } catch (err) {
+                console.log(err);
+            }
+        })
+    })
+
+    describe ("GET Workout attending members", () => {
+        it("should return array of workout members", async () => {
+            try {
+                const count = await Workout.count();
+                const workout = await Workout.findOne().skip(Math.floor(Math.random() * count));
+                const response = await request(app)
+                    .get("/api/workout/getAttendees")
+                    .query({id: workout._id})
+                expect(response.statusCode).toBe(200);
+                expect(response.body).toHaveProperty("data");
+                expect(response.body.data.length).toBeGreaterThan(0);
+            } catch (err) {
+                console.log(err);
+            }
+        })
+    })
+
+    describe ("DELETE delete existing workout", () => {
+        it("should return message saying workout deleted", async () => {
+            try {
+                const count = await Workout.count();
+                const workout = await Workout.findOne().skip(Math.floor(Math.random() * count));
+                const response = await request(app)
+                    .delete("/api/workout/delete")
+                    .send({id: workout._id})
+                expect(response.statusCode).toBe(200);
+                expect(response.body).toHaveProperty("data");
+            } catch (err) {
+                console.log(err);
+            }
+        })
+    })
 })
 
