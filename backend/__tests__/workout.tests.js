@@ -123,10 +123,22 @@ describe("Workout Tests", () => {
     describe("POST Get workout(s) matching fields", () => {
         it("should return message saying no match, or details of matching workouts", async () => {
             try {
-                
+                const fields = {
+                    minPeople: Math.floor(Math.random() * 10)
+                }
+                const response = await request(app)
+                    .post("/api/workout/getWorkouts")
+                    .send({fields: fields})
+                expect([200, 500]).toContain(response.statusCode);
+                if (response.statusCode === 200) {
+                    expect(response.body).toHaveProperty("data");
+                    expect(response.body.data.length).toBeGreaterThan(0);
+                }
+                else if (response.statusCode === 500) {
+                    expect(response.body).toHaveProperty("error");
+                }
             } catch (err) {
                 console.log(err);
-
             }
         })
     })
