@@ -25,6 +25,13 @@ export default function Filter({ visible, setVisible, filter, setFilter }) {
         setVisible(false)
     }
 
+    const resetFilter = () => {
+        setSports(filter.activity);
+        setEL(filter.experienceLevel);
+        setIsChecked(false);
+        setPickedDate(undefined);
+    }
+
 
     const SPORTS = [
         { label: "All", value: -1 },
@@ -63,6 +70,12 @@ export default function Filter({ visible, setVisible, filter, setFilter }) {
                         <Text>Set filters for your workouts!</Text>
                     </View>
                     <ScrollView>
+                    <View style={{paddingLeft:30}} >
+                        <Pressable onPress={resetFilter}>
+                            <Text style={{color:"#e6006b"}}>Reset Filter</Text>
+                            </Pressable>
+                        </View>
+
                         <View style={filterStyle.grid}>
                             <Text style={{ flex: 1 }}>Sports</Text>
                             <Picker
