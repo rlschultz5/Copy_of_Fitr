@@ -5,6 +5,7 @@ import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, Touc
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import API from "../../api";
 import { AuthContext } from '../../contexts/authContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const authScreen = ({ navigation }) => {
@@ -32,6 +33,8 @@ const authScreen = ({ navigation }) => {
       }
 
       try {
+        console.log(res.data.data);
+        await AsyncStorage.removeItem('user');
         await AsyncStorage.setItem('user', JSON.stringify(res.data.data))
       } catch (e) {
         // saving error
