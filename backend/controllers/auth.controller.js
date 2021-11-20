@@ -6,6 +6,7 @@ const db = require("../models");
 const User = db.user;
 
 exports.signUp = async (req, res) => {
+    console.log(req);
     try {
         passport.authenticate("signup", (err, user, info) => {
             if (err) {
