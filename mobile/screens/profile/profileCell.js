@@ -5,7 +5,8 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function ProfileCell({data}) {
   return (
     <View style={cellStyle.container}>
-      <Text>{data.username}</Text>
+      <Text style={{color:"#064884", alignSelf:"center", fontWeight:"500", fontSize:15}}>
+        {data.username}</Text>
       <Text>{data.password}</Text>
       <Text>{data.name}</Text>
       <Text>{data.email}</Text>
@@ -27,7 +28,7 @@ const cellStyle = StyleSheet.create({
     borderColor:"grey",
     borderWidth:1,
     borderRadius:15,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     alignItems: "flex-start",
     justifyContent: 'center',
     marginBottom:15,
