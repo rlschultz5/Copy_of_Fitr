@@ -8,5 +8,5 @@ module.exports = (app) => {
     app.get("/api/workout/getActivity", workoutController.getActivity);
     app.post("/api/workout/getWorkouts", workoutController.getWorkouts);
     app.get("/api/workout/isFull", workoutController.isFull);
-    app.get("/api/workout/getAtendees", workoutController.getAttendees);
+    app.get("/api/workout/getAttendees", workoutController.getAttendees);
 }
