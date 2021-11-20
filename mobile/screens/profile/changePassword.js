@@ -9,14 +9,20 @@ export default function changePassword({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Text style={{ left: "5%", fontSize: 30, marginBottom:50}}> Change Password</Text>
-      <Text style={{ marginBottom:20 }}>Enter new password below</Text>
-      <TextInput onChangeText={setPassword} value={password} placeholderTextColor="#ffc3b8" placeholder="Password" style={styles.textInput} />
-      <Pressable onPress={()=>navigation.navigate("MainProfile")}>
-        <Text style={{ marginTop:20 }}>
+      <Text style={{ alignSelf:"center", fontSize: 30, marginBottom:50}}> Change Password</Text>
+      <TextInput onChangeText={setPassword} value={password} placeholderTextColor="grey" placeholder="Enter new password" style={styles.textInput} style={{fontSize: 20, margin: 10}} />
+      <Pressable style={{backgroundColor:"#004275", justifyContent:"center", height:50, margin:5, marginTop: 20, borderRadius:10}}
+      onPress={()=>navigation.navigate("MainProfile")}>
+        <Text style={{color:"white", alignSelf:"center", fontWeight:"500", fontSize:15}}>
           Submit
         </Text>
-        </Pressable> 
+      </Pressable> 
+      <Pressable style={{backgroundColor:"#004275", justifyContent:"center", height:50, margin:5, marginTop: 20, borderRadius:10}}
+      onPress={()=>navigation.navigate("MainProfile")}>
+        <Text style={{color:"white", alignSelf:"center", fontWeight:"500", fontSize:15}}>
+          Cancel
+        </Text>
+      </Pressable>
       <StatusBar style="auto" />
     </View>
   );
