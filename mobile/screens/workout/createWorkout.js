@@ -14,7 +14,6 @@ const CreateWorkout = ({ navigation }) => {
   const [activity, setActivity] = useState(null);
   const [experience, setExperience] = useState(null);
   const [length, setLength] = useState(null);
-  // const [date, setDate] = useState(null);
   const [pickedDate, setPickedDate] = useState();
   const [location, setLocation] = useState(null);
   const [minPeople, setMinPeople] = useState(null);
@@ -48,7 +47,7 @@ const CreateWorkout = ({ navigation }) => {
     { label: "120 Min", value: 120 },]
   const handleText = () => pickedDate
     ? pickedDate.toDateString()
-    : "No value Selected";
+    : "Choose a date";
 
   const setLoggedIn = React.useContext(AuthContext);
   const onSubmit = async () => {
