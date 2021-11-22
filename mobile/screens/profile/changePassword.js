@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Pressable, Image, Button, TextInput } from 'react-native';
-import ProfileList from './profileList';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios"
 
 
 export default function changePassword({navigation}) {
