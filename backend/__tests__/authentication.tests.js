@@ -31,7 +31,7 @@ afterAll(async () => {
 describe("Authentication Tests", () => {
     describe("POST Signin", () => {
         it("should return success message and token", async () => {
-            const username = "ygrover";
+            const username = "john";
             const password = "password";
             const response = await request(app)
                 .post("/api/signin")
