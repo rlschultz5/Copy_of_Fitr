@@ -147,13 +147,14 @@ const CreateWorkout = ({ navigation }) => {
     setTimeout(()=>{navigation.navigate("Main")}, 3000)
 
   }
-  if(success===true) return (
+  if(true) return (
     <View style={{justifyContent:"center", alignItems:"center", flex:1, backgroundColor:"white"}}>
     {/* <Animated.View style={animatedStyles}> */}
-      <Text style={{ alignSelf:"center", fontSize:30, textAlign:"center", color:"#e6006b", fontWeight:"500"}}>Workout Created Successfully!</Text>
+      <Text style={{ alignSelf:"center", fontSize:30, textAlign:"center", color:"#e6006b", fontWeight:"500", marginBottom:20}}>Workout Created Successfully!</Text>
       
     {/* </Animated.View> */}
-    <Text style={{marginTop:15}}>Returning to home page in 3 seconds...</Text>
+    {/* <Text style={{marginTop:15}}>Returning to home page in 3 seconds...</Text> */}
+    <Button onPress={()=>{navigation.navigate("Main")}} title="Go Home" color="black"/>
     </View>
   
   )
