@@ -63,7 +63,7 @@ const ForgotPassword = ({ navigation }) => {
           <Text style={styles.header}>Fitr</Text>
           <View>
             <TextInput placeholderTextColor="grey" secureTextEntry={false} onChangeText={setEmail} value={email} placeholder="Email" style={styles.textInput} />
-            <Button color="white" title="Send reset password email" disabled={isLoading} onPress={onSubmit} />
+            <Button color="black" title="Send reset password email" disabled={isLoading} onPress={onSubmit} />
           </View>
           {(isError)?(<Text style={{color:"blue"}}>* Email not listed. Try again or make an account today!</Text>):<Text/>}
 
