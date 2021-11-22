@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, SafeAreaView, ScrollView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
 // import { Checkbox } from 'react-native-paper';
-// import axios from "axios";
+import axios from "axios";
 import API from "../../api";
 import { Picker } from 'react-native-woodpicker'
 
@@ -11,13 +11,11 @@ const SignupScreen = ({ navigation }) => {
   const [password, setPassword] = useState();
   const [name, setName] = useState();
   const [email, setEmail] = useState();
-  const [city, setCity] = useState(true);
+  const [city, setCity] = useState();
   const [state, setState] = useState();
-  const [zipcode, setZipcode] = useState();
+  const [zipCode, setZipCode] = useState();
   const [schoolYear, setSchoolYear] = useState();
-  const [activities, setActivities] = useState();
-  const [preferences, setPreferences] = useState();
-  const [isAdmin, setIsAdmin] = useState();
+  // const [preferences, setPreferences] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [disabled, setDisabled] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -35,8 +33,16 @@ const SignupScreen = ({ navigation }) => {
   }
 
   const onSubmit = async () => {
-
-    if(username == null|| password == null || name == null || email == null || city == null || state == null || zipcode == null ||schoolYear == null) {
+    console.log(username);
+    console.log(password);
+    console.log(name);
+    console.log(email);
+    console.log(city);
+    console.log(state);
+    console.log(zipCode);
+    console.log(schoolYear.label);
+    if(username == null|| password == null || name == null || email == null || city == null || state == null || zipCode == null ||schoolYear == null) {
+      console.log("something is null");
       setError(true);
       return;
     }
@@ -51,11 +57,9 @@ const SignupScreen = ({ navigation }) => {
           email: email,
           city: city,
           state: state,
-          zipcode: zipcode,
-          schoolYear: schoolYear,
-          activities: activities,
-          preferences: preferences,
-          isAdmin: false
+          zipCode: parseInt(zipCode),
+          schoolYear: schoolYear.label,
+          activities: []
         });
       setIsLoading(false);
 
@@ -65,21 +69,13 @@ const SignupScreen = ({ navigation }) => {
         console.log("denied");
         return;
       }
-      try {
-        await AsyncStorage.setItem('user', JSON.stringify(res.data))
-        console.log(res.data);
-      } catch (e) {
-        // saving error
-      }
 
       setSubmitted(true);
     } catch (e) {
       console.log(e.message);
     }
     setDisabled(false);
-  }
-
-// Change Create button to {onSubmit}
+  } 
 
 
   return (submitted) ?
@@ -112,21 +108,20 @@ const SignupScreen = ({ navigation }) => {
                 <TextInput onChangeText={setEmail} value={email} placeholderTextColor="#ffc3b8" placeholder="Email" style={styles.textInput} />
                 <TextInput onChangeText={setCity} value={city} placeholderTextColor="#ffc3b8" placeholder="City" style={styles.textInput} />
                 <TextInput onChangeText={setState} value={state} placeholderTextColor="#ffc3b8" placeholder="State" style={styles.textInput} />
-                <TextInput onChangeText={setZipcode} value={zipcode} placeholderTextColor="#ffc3b8" placeholder="Zipcode" style={styles.textInput} />
-                <Picker
+                <TextInput onChangeText={setZipCode} value={zipCode} placeholderTextColor="#ffc3b8" placeholder="Zip Code" style={styles.textInput} />
+                <Picker textInputStyle={{color: '#ffc3b8', padding: 5}}
                   containerStyle={styles.picker}
                   item={schoolYear}
                   items={SCHOOLYEAR}
                   onItemChange={setSchoolYear}
-                  title="School Year"
+                  title ="School Year"
                   placeholder="Select School Year"
                   style={{ flex: 1, textAlign: "right" }}
                   isNullable
                 />
-                <Text style={styles.label}>Optional:</Text>
+                {/* <Text style={styles.label}>Optional:</Text>
                 <Text style={styles.label}></Text>
-                <TextInput onChangeText={setActivities} value={activities} placeholderTextColor="#ffc3b8" placeholder="(Activities Option To Be Implemented)" style={styles.textInput} />
-                <TextInput onChangeText={setPreferences} value={preferences} placeholderTextColor="#ffc3b8" placeholder="(Preferences Option To Be Implemented)" style={styles.textInput} />
+                <TextInput onChangeText={setPreferences} value={preferences} placeholderTextColor="#ffc3b8" placeholder="(Preferences Option To Be Implemented)" style={styles.textInput} /> */}
               </View>
 
               {(isError)?(<Text style={{color:"blue"}}>* Sign up Failed. Please fill in all the blanks.</Text>):<Text/>}
@@ -190,11 +185,11 @@ const styles = StyleSheet.create({
     marginTop: 12
   },
   picker: { // new
-    width: 300,
+    width: 330,
     height: 45,
-    borderColor: 'blue',
+    borderColor: 'white',
     borderWidth: 2,
-    backgroundColor: 'grey',
+    backgroundColor: '#344955',
     color: 'white'
   }
 });

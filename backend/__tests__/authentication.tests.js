@@ -2,6 +2,8 @@ const app = require("../app");
 const request = require("supertest");
 const mongoose = require("mongoose");
 
+const dbConfig = require("../config/db.config")
+
 describe("basic sample test", () => {
     it('1 + 1 = 2', () => {
         expect(1+1).toBe(2);
@@ -16,6 +18,7 @@ beforeAll(async () => {
         });
         console.log("Connected to database");
     } catch (err) {
+        console.log("err")
         console.log("Error occurred when connecting to database");
     }
 })

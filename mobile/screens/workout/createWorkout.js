@@ -1,25 +1,29 @@
-import React, { useState, Component, Dropdown } from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, ScrollView, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
 import API from "../../api";
 import { AuthContext } from '../../contexts/authContext';
 import { Picker } from 'react-native-woodpicker'
 import { DatePicker } from 'react-native-woodpicker'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const CreateWorkout = ({ navigation }) => {
+  const [creator_id, setCreator_id] = useState();
   const [title, setTitle] = useState(null);
   const [activity, setActivity] = useState(null);
   const [experience, setExperience] = useState(null);
   const [length, setLength] = useState(null);
-  const [dateAndTime, setDateAndTime] = useState(null);
+  const [pickedDate, setPickedDate] = useState();
   const [location, setLocation] = useState(null);
   const [minPeople, setMinPeople] = useState(null);
   const [maxPeople, setMaxPeople] = useState(null);
+  const [description, setDescription] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [authStatus, setAuthStatus] = useState("NA");
   const [isError, setError] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  const [pickedSports, setSports] = useState();
   const SPORTS = [
     { label: "Select Activity", value: -1 },
     { label: "Basketball", value: 2 },
@@ -37,34 +41,54 @@ const CreateWorkout = ({ navigation }) => {
     { label: "Competitive", value: 4 },]
   const LENGTH = [
     { label: "Select Length", value: -1 },
-    { label: "30 Min", value: 2 },
-    { label: "60 Min", value: 3 },
-    { label: "90 Min", value: 4 },
-    { label: "120 Min", value: 5 },]
+    { label: "30 Min", value: 30 },
+    { label: "60 Min", value: 60 },
+    { label: "90 Min", value: 90 },
+    { label: "120 Min", value: 120 },]
+  const handleText = () => pickedDate
+    ? pickedDate.toDateString()
+    : "Choose a date";
 
   const setLoggedIn = React.useContext(AuthContext);
   const onSubmit = async () => {
+    // setIsLoading(true);
 
-    if(activity == null|| experience == null || length == null || dateAndTime == null || location == null || minPeople == null || maxPeople == null ) {
-      setError(true);
-      return;
-    }
-
-    setDisabled(true);
     try {
-        const res = await axios.post(`http://${API}:8080/api/createWorkout`,
-        {
-          tite: title,
-          activity: activity,
-          location: location,
-          minPeople: minPeople,
-          maxPeople: maxPeople,
-          experience: experience,
-          length: length,
+      let userData = JSON.parse(await AsyncStorage.getItem('user'));
+      let date = (new Date("2016-02-29T07:00:00.000Z"));
 
-          dateAndTime: dateAndTime
+        
+        console.log(title);
+        console.log(activity);
+        console.log(location);
+        console.log(minPeople);
+        console.log(maxPeople);
+        console.log(experience);
+        console.log(length);
+        console.log(userData._id);
+        console.log(pickedDate);
+        console.log(userData._id);
+      if(title == null || activity == null || location == null || minPeople == null || maxPeople == null || experience == null || length == null ||  pickedDate == null || userData._id == null ) {
+      
+        
+        setError(true);
+        return;
+      }
+      const res = await axios.post(`http://${API}:8080/api/workout/create`,
+        {
+          title: title,
+          activity: activity.label,
+          location: location.label,
+          minPeople: parseInt(minPeople),
+          maxPeople: parseInt(maxPeople),
+          date: pickedDate, // NOT DONE!!!!
+          experienceLevel: experience.label,
+          length: length.value,
+          creator_id: userData._id,
+          membersAttending: [userData._id],
+          description: description
         });
-      setIsLoading(false);
+      // setIsLoading(false);
 
       if (res.status != 200) {
         setAuthStatus("denied");
@@ -73,26 +97,17 @@ const CreateWorkout = ({ navigation }) => {
         return;
       }
 
-      try {
-        await AsyncStorage.setItem('user', JSON.stringify(res.data))
-        console.log(res.data);
-      } catch (e) {
-        // saving error
-        // TODO: CORRECT??
-      }
-
-      navigation.navigate("AuthNavigator", { screen: "Login" });
-
+      navigation.navigate("Main");
     } catch (e) {
-      console.log(e.message);
+      console.log(e);
       setError(true);
-      setIsLoading(false);
+      // setIsLoading(false);
       setAuthStatus("denied");
       return;
     }
-  }
 
-  // Change Create Workout! button to {createWorkout}
+    setDisabled(true);
+  }
 
   return (
     <KeyboardAvoidingView
@@ -105,9 +120,9 @@ const CreateWorkout = ({ navigation }) => {
             <Text style={styles.header}>Fitr</Text>
             <View>
               <Text></Text>
-              <TextInput placeholderTextColor="ffc3b8" secureTextEntry={true} onChangeText={setTitle} value={title} placeholder="Workout Title" style={styles.textInput} />
-              {/* <TextInput placeholderTextColor="grey" secureTextEntry={true} onChangeText={setActivity} value={activity} placeholder="Activity (TODO: dropdown list)" style={styles.textInput} /> */}
+              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={false} onChangeText={setTitle} value={title} placeholder="Workout Title" style={styles.textInput} />
               <Picker
+                textInputStyle={{color: '#ffc3b8', padding: 5}}
                 containerStyle={styles.picker}
                 item={activity}
                 items={SPORTS}
@@ -118,6 +133,7 @@ const CreateWorkout = ({ navigation }) => {
                 isNullable
               />
               <Picker
+                textInputStyle={{color: '#ffc3b8', padding: 5}}
                 containerStyle={styles.picker}
                 item={location}
                 items={LOCATION}
@@ -127,9 +143,29 @@ const CreateWorkout = ({ navigation }) => {
                 style={{ flex: 1, textAlign: "right" }}
                 isNullable
               />
-              <TextInput placeholderTextColor="ffc3b8" secureTextEntry={true} onChangeText={setMinPeople} value={minPeople} placeholder="Minimum People" style={styles.textInput} />
-              <TextInput placeholderTextColor="ffc3b8" secureTextEntry={true} onChangeText={setMaxPeople} value={maxPeople} placeholder="Maximum People" style={styles.textInput} />
+              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={false} onChangeText={setMinPeople} value={minPeople} placeholder="Minimum People" style={styles.textInput} />
+              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={false} onChangeText={setMaxPeople} value={maxPeople} placeholder="Maximum People" style={styles.textInput} />
+              {/* <TextInput placeholderTextColor="white" secureTextEntry={false} onChangeText={setDate} value={date} placeholder="Date and Time (TODO: clock implementation)" style={styles.textInput} /> */}
+              <DatePicker
+                textInputStyle={{color: '#ffc3b8', padding: 5}}
+                containerStyle={styles.picker}
+                value={pickedDate}
+                onDateChange={setPickedDate}
+                title="Date Picker"
+                text={handleText()}
+                isNullable={false}
+                iosDisplay="inline"
+                //backdropAnimation={{ opacity: 0 }}
+                //minimumDate={new Date(Date.now())}
+                //maximumDate={new Date(Date.now()+2000000000)}
+                //iosMode="date"
+                //androidMode="countdown"
+                //iosDisplay="spinner"
+                //androidDisplay="spinner"
+                //locale="fr"
+              />
               <Picker
+                textInputStyle={{color: '#ffc3b8', padding: 5}}
                 containerStyle={styles.picker}
                 item={experience}
                 items={EXPERIENCE}
@@ -140,6 +176,7 @@ const CreateWorkout = ({ navigation }) => {
                 isNullable
               />
               <Picker
+                textInputStyle={{color: '#ffc3b8', padding: 5}}
                 containerStyle={styles.picker}
                 item={length}
                 items={LENGTH}
@@ -149,11 +186,11 @@ const CreateWorkout = ({ navigation }) => {
                 style={{ flex: 1, textAlign: "right" }}
                 isNullable
               />
-              <TextInput placeholderTextColor="ffc3b8" secureTextEntry={true} onChangeText={setDateAndTime} value={dateAndTime} placeholder="Date and Time (TODO: clock implementation)" style={styles.textInput} />
+              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={false} onChangeText={setDescription} value={description} placeholder="Description" style={styles.textInput} />
               <Text></Text>
-              <Button color="black" disabled={disabled} title="Create Workout!" onPress={onSubmit} />
+              <Button color="white" disabled={disabled} title="Create Workout!" onPress={onSubmit} />
             </View>
-            {(isError)?(<Text style={{color:"blue"}}>* Unsuccessful. Make sure all fields are filled out and try again.</Text>):<Text/>}
+            {(isError)?(<Text style={{color:"white"}}>* Unsuccessful. Make sure all fields are filled out and try again.</Text>):<Text/>}
 
           </View>
         </ScrollView>
@@ -181,22 +218,25 @@ const styles = StyleSheet.create({
     color:"white",
   },
   textInput: {
+    fontSize: 16,
+    padding: 6,
     height: 40,
     color: "white",
     borderColor: "white",
     borderBottomWidth: 1,
-    marginBottom: 50
+    marginBottom: 20
   },
   btnContainer: {
     marginTop: 12
   },
   picker: { // new
-    width: 300,
+    width: 325,
     height: 45,
-    borderColor: 'blue',
+    borderColor: 'white',
     borderWidth: 2,
-    backgroundColor: 'grey',
-    color: 'white'
+    backgroundColor: '#344955',
+    color: 'white',
+    marginBottom: 20
   }
 });
 

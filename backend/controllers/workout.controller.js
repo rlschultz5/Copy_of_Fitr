@@ -64,9 +64,12 @@ exports.deleteWorkout = async (req, res) => {
 }
 
 exports.createWorkout = async (req, res) => {
+    // console.log(req.body)
     if (!req.body.title || !req.body.activity || !req.body.minPeople || !req.body.experienceLevel || !req.body.length) {
+        // console.log(req.body)
         res.status(500).send({error: "Required fields missing"});
     } else {
+        console.log(req.body)
         try {
             let isFull = (req.body.maxPeople == 1)
             const workoutObj = {
