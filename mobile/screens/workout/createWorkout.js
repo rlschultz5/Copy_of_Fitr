@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from "axios";
-import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, ScrollView, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
+import { View, Pressable, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, ScrollView, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
 import API from "../../api";
 import { AuthContext } from '../../contexts/authContext';
 import { Picker } from 'react-native-woodpicker'
 import { DatePicker } from 'react-native-woodpicker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 
 const CreateWorkout = ({ navigation }) => {
@@ -22,6 +24,7 @@ const CreateWorkout = ({ navigation }) => {
   const [disabled, setDisabled] = useState(false);
   const [authStatus, setAuthStatus] = useState("NA");
   const [isError, setError] = useState(false);
+  const [time, setTime] = useState(new Date());
   // const [isLoading, setIsLoading] = useState(false);
 
   const SPORTS = [
@@ -57,19 +60,18 @@ const CreateWorkout = ({ navigation }) => {
       let userData = JSON.parse(await AsyncStorage.getItem('user'));
       let date = (new Date("2016-02-29T07:00:00.000Z"));
 
-        
-        console.log(title);
-        console.log(activity);
-        console.log(location);
-        console.log(minPeople);
-        console.log(maxPeople);
-        console.log(experience);
-        console.log(length);
-        console.log(userData._id);
-        console.log(pickedDate);
-        console.log(userData._id);
-      if(title == null || activity == null || location == null || minPeople == null || maxPeople == null || experience == null || length == null ||  pickedDate == null || userData._id == null ) {
-      
+
+      console.log(title);
+      console.log(activity);
+      console.log(location);
+      console.log(minPeople);
+      console.log(maxPeople);
+      console.log(experience);
+      console.log(length);
+      console.log(userData._id);
+      console.log(time);
+      console.log(userData._id);
+      if (title == null || activity == null || location == null || minPeople == null || maxPeople == null || experience == null || length == null || time == null || userData._id == null) {
         
         setError(true);
         return;
@@ -81,7 +83,7 @@ const CreateWorkout = ({ navigation }) => {
           location: location.label,
           minPeople: parseInt(minPeople),
           maxPeople: parseInt(maxPeople),
-          date: pickedDate, // NOT DONE!!!!
+          date: time, // NOT DONE!!!!
           experienceLevel: experience.label,
           length: length.value,
           creator_id: userData._id,
@@ -89,6 +91,7 @@ const CreateWorkout = ({ navigation }) => {
           description: description
         });
       // setIsLoading(false);
+      
 
       if (res.status != 200) {
         setAuthStatus("denied");
@@ -96,6 +99,7 @@ const CreateWorkout = ({ navigation }) => {
         console.log("denied");
         return;
       }
+      console.log("SUCCESS!")
 
       navigation.navigate("Main");
     } catch (e) {
@@ -115,14 +119,20 @@ const CreateWorkout = ({ navigation }) => {
       style={styles.container}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView style={{ marginTop: 40 }}>
+        <ScrollView style={{ marginTop: 60 }}>
           <View style={styles.inner}>
-            <Text style={styles.header}>Fitr</Text>
+            <Text style={styles.header}>Create Workout</Text>
+            <Text style={{ width: "80%", color: "#e6006b", marginBottom: 30 }}>If none works, create your own!</Text>
             <View>
               <Text></Text>
-              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={false} onChangeText={setTitle} value={title} placeholder="Workout Title" style={styles.textInput} />
+              <TextInput placeholderTextColor="black" secureTextEntry={false} onChangeText={setTitle} value={title} placeholder="Workout Title" style={styles.textInput} />
+              <TextInput placeholderTextColor="black" secureTextEntry={false} onChangeText={setDescription} value={description} placeholder="Description" style={styles.textInput} />
+              <TextInput placeholderTextColor="black" secureTextEntry={false} onChangeText={setMinPeople} value={minPeople} placeholder="Minimum People" style={styles.textInput} />
+              <TextInput placeholderTextColor="black" secureTextEntry={false} onChangeText={setMaxPeople} value={maxPeople} placeholder="Maximum People" style={styles.textInput} />
+              <View style={{ height: 30 }} />
+
               <Picker
-                textInputStyle={{color: '#ffc3b8', padding: 5}}
+                textInputStyle={{ color: 'black', padding: 5 }}
                 containerStyle={styles.picker}
                 item={activity}
                 items={SPORTS}
@@ -133,7 +143,7 @@ const CreateWorkout = ({ navigation }) => {
                 isNullable
               />
               <Picker
-                textInputStyle={{color: '#ffc3b8', padding: 5}}
+                textInputStyle={{ color: 'black', padding: 5 }}
                 containerStyle={styles.picker}
                 item={location}
                 items={LOCATION}
@@ -143,11 +153,9 @@ const CreateWorkout = ({ navigation }) => {
                 style={{ flex: 1, textAlign: "right" }}
                 isNullable
               />
-              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={false} onChangeText={setMinPeople} value={minPeople} placeholder="Minimum People" style={styles.textInput} />
-              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={false} onChangeText={setMaxPeople} value={maxPeople} placeholder="Maximum People" style={styles.textInput} />
               {/* <TextInput placeholderTextColor="white" secureTextEntry={false} onChangeText={setDate} value={date} placeholder="Date and Time (TODO: clock implementation)" style={styles.textInput} /> */}
-              <DatePicker
-                textInputStyle={{color: '#ffc3b8', padding: 5}}
+              {/* <DatePicker
+                textInputStyle={{ color: 'black', padding: 5 }}
                 containerStyle={styles.picker}
                 value={pickedDate}
                 onDateChange={setPickedDate}
@@ -155,17 +163,19 @@ const CreateWorkout = ({ navigation }) => {
                 text={handleText()}
                 isNullable={false}
                 iosDisplay="inline"
-                //backdropAnimation={{ opacity: 0 }}
-                //minimumDate={new Date(Date.now())}
-                //maximumDate={new Date(Date.now()+2000000000)}
-                //iosMode="date"
-                //androidMode="countdown"
-                //iosDisplay="spinner"
-                //androidDisplay="spinner"
-                //locale="fr"
-              />
+              //backdropAnimation={{ opacity: 0 }}
+              //minimumDate={new Date(Date.now())}
+              //maximumDate={new Date(Date.now()+2000000000)}
+              //iosMode="date"
+              //androidMode="countdown"
+              //iosDisplay="spinner"
+              //androidDisplay="spinner"
+              //locale="fr"
+              /> */}
+
+
               <Picker
-                textInputStyle={{color: '#ffc3b8', padding: 5}}
+                textInputStyle={{ color: 'black', padding: 5 }}
                 containerStyle={styles.picker}
                 item={experience}
                 items={EXPERIENCE}
@@ -176,7 +186,7 @@ const CreateWorkout = ({ navigation }) => {
                 isNullable
               />
               <Picker
-                textInputStyle={{color: '#ffc3b8', padding: 5}}
+                textInputStyle={{ color: 'black', padding: 5 }}
                 containerStyle={styles.picker}
                 item={length}
                 items={LENGTH}
@@ -186,11 +196,31 @@ const CreateWorkout = ({ navigation }) => {
                 style={{ flex: 1, textAlign: "right" }}
                 isNullable
               />
-              <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={false} onChangeText={setDescription} value={description} placeholder="Description" style={styles.textInput} />
+              <View style={{ height: 30 }} />
+
+              <View style={{ flexDirection: "row", marginBottom:20 }}>
+                <Text style={{ flex: 1, fontSize: 16 }}>Choose time: </Text>
+                <DateTimePicker
+                  testID="timePicker"
+                  style={{ flex: 2, top: -8 }}
+                  value={time}
+                  mode="datetime"
+                  is24Hour={false}
+                  display="default"
+                  onChange={(e, d) => setTime(d)}
+                />
+              </View>
+
               <Text></Text>
-              <Button color="white" disabled={disabled} title="Create Workout!" onPress={onSubmit} />
+              <Pressable disabled={disabled} style={{backgroundColor:"#004275", justifyContent:"center",height:50, margin:15, marginTop: 25, borderRadius:10}}
+      onPress={onSubmit}>
+        <Text style={{color:"white", alignSelf:"center", fontWeight:"500", fontSize:15}}>
+          Create Workout!
+        </Text>
+
+      </Pressable>
             </View>
-            {(isError)?(<Text style={{color:"white"}}>* Unsuccessful. Make sure all fields are filled out and try again.</Text>):<Text/>}
+            {(isError) ? (<Text style={{ color: "white" }}>* Unsuccessful. Make sure all fields are filled out and try again.</Text>) : <Text />}
 
           </View>
         </ScrollView>
@@ -204,7 +234,7 @@ export default CreateWorkout;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#344955"
+    backgroundColor: "white"
   },
   inner: {
     padding: 24,
@@ -213,16 +243,15 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 36,
-    fontWeight: "300",
-    marginBottom: 48,
-    color:"white",
+    fontWeight: "400",
+    color: "black",
   },
   textInput: {
     fontSize: 16,
     padding: 6,
     height: 40,
-    color: "white",
-    borderColor: "white",
+    color: "black",
+    borderColor: "#3f3f3f",
     borderBottomWidth: 1,
     marginBottom: 20
   },
@@ -232,11 +261,12 @@ const styles = StyleSheet.create({
   picker: { // new
     width: 325,
     height: 45,
-    borderColor: 'white',
-    borderWidth: 2,
-    backgroundColor: '#344955',
+    borderColor: 'grey',
+    borderWidth: 1,
+    borderRadius: 15,
     color: 'white',
-    marginBottom: 20
+    marginBottom: 20,
+    paddingLeft: 10
   }
 });
 

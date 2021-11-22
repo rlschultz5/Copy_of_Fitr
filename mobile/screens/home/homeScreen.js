@@ -33,6 +33,7 @@ export default function HomeScreen({ navigation }) {
   const [showFilter, setShowFilter] = useState(false);
   const [filter, setFilter] = useState({});
   const [loading,setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(true);
 
   useEffect(()=>{
     const getWorkouts = async () => {
@@ -58,7 +59,7 @@ export default function HomeScreen({ navigation }) {
       }
     }
     getWorkouts();
-  },[filter])
+  },[filter, refresh])
 
 
   return (
@@ -86,6 +87,9 @@ export default function HomeScreen({ navigation }) {
       </Pressable>
       <View style={styles.listContainer}>
         <Text style={styles.title}>Workouts Available: </Text>
+        <Pressable onPress={()=>setRefresh(!refresh)}>
+        <Ionicons style={{flex:1}} name="refresh-outline" size={20}/>
+        </Pressable>
 
       </View>
 
@@ -144,8 +148,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "600",
+    flex: 10
   },
   listContainer: {
-    padding: 10,
+    padding: 20,
+    flexDirection:"row",
   }
 });
