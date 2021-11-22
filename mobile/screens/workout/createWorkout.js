@@ -147,7 +147,7 @@ const CreateWorkout = ({ navigation }) => {
     setTimeout(()=>{navigation.navigate("Main")}, 3000)
 
   }
-  if(true) return (
+  if(success===true) return (
     <View style={{justifyContent:"center", alignItems:"center", flex:1, backgroundColor:"white"}}>
     {/* <Animated.View style={animatedStyles}> */}
       <Text style={{ alignSelf:"center", fontSize:30, textAlign:"center", color:"#e6006b", fontWeight:"500", marginBottom:20}}>Workout Created Successfully!</Text>
