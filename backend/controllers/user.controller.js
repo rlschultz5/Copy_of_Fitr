@@ -136,7 +136,11 @@ exports.getAttendingWorkouts = async (req, res) => {
 
   try {
     let result = await User.findOne({_id: req.body.user_id})
-    console.log(result)
+    let workouts = result.attendingWorkouts; 
+    const newWorkouts = workouts.filter(workout => (workout.date >= new Date()));
+    console.log(newWorkouts);
+    result.attendingWorkouts = newWorkouts;
+    await result.save();
     res.send({data: result.attendingWorkouts})
   } catch (err) {
     console.log(err)
