@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 import axios from "axios";
-import { View, Pressable, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, ScrollView, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
+import { Animated, Easing, View, Pressable, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, ScrollView, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
 import API from "../../api";
 import { AuthContext } from '../../contexts/authContext';
 import { Picker } from 'react-native-woodpicker'
 import { DatePicker } from 'react-native-woodpicker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import LottieView from 'lottie-react-native';
+
 
 
 
@@ -25,7 +27,38 @@ const CreateWorkout = ({ navigation }) => {
   const [authStatus, setAuthStatus] = useState("NA");
   const [isError, setError] = useState(false);
   const [time, setTime] = useState(new Date());
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(-1);
   // const [isLoading, setIsLoading] = useState(false);
+
+  // let opacity = new Animated.Value(0);
+
+  // const animate = easing => {
+  //   Animated.timing(opacity, {
+  //     toValue: 1,
+  //     duration: 1200,
+  //     easing
+  //   }).start();
+  // };
+
+  // useEffect(()=>{
+  //   animate(Easing.bounce)
+  // },[])
+
+  // const size = opacity.interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: [0, 80]
+  // });
+
+  // const animatedStyles = [
+  //   {},
+  //   {
+  //     opacity,
+  //     width: size,
+  //     height: size
+  //   }]
+  // ;
+
 
   const SPORTS = [
     { label: "Select Activity", value: -1 },
@@ -53,8 +86,9 @@ const CreateWorkout = ({ navigation }) => {
     : "Choose a date";
 
   const setLoggedIn = React.useContext(AuthContext);
+
   const onSubmit = async () => {
-    // setIsLoading(true);
+    setLoading(true);
 
     try {
       let userData = JSON.parse(await AsyncStorage.getItem('user'));
@@ -99,9 +133,7 @@ const CreateWorkout = ({ navigation }) => {
         console.log("denied");
         return;
       }
-      console.log("SUCCESS!")
-
-      navigation.navigate("Main");
+      
     } catch (e) {
       console.log(e);
       setError(true);
@@ -109,11 +141,24 @@ const CreateWorkout = ({ navigation }) => {
       setAuthStatus("denied");
       return;
     }
-
+    setLoading(false);
     setDisabled(true);
-  }
+    setSuccess(true);
+    setTimeout(()=>{navigation.navigate("Main")}, 3000)
 
-  return (
+  }
+  if(success===true) return (
+    <View style={{justifyContent:"center", alignItems:"center", flex:1, backgroundColor:"white"}}>
+    {/* <Animated.View style={animatedStyles}> */}
+      <Text style={{ alignSelf:"center", fontSize:30, textAlign:"center", color:"#e6006b", fontWeight:"500"}}>Workout Created Successfully!</Text>
+      
+    {/* </Animated.View> */}
+    <Text style={{marginTop:15}}>Returning to home page in 3 seconds...</Text>
+    </View>
+  
+  )
+  return loading ? (<LottieView style={{ width: 60, alignSelf: "center", top: "10%" }} speed={2} source={require("../loader.json")} autoPlay={true} loop={true}></LottieView>
+  ) : (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}

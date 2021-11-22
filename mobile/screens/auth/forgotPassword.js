@@ -62,14 +62,14 @@ const ForgotPassword = ({ navigation }) => {
         <View style={styles.inner}>
           <Text style={styles.header}>Fitr</Text>
           <View>
-            <TextInput placeholderTextColor="#ffc3b8" secureTextEntry={false} onChangeText={setEmail} value={email} placeholder="Email" style={styles.textInput} />
+            <TextInput placeholderTextColor="grey" secureTextEntry={false} onChangeText={setEmail} value={email} placeholder="Email" style={styles.textInput} />
             <Button color="white" title="Send reset password email" disabled={isLoading} onPress={onSubmit} />
           </View>
           {(isError)?(<Text style={{color:"blue"}}>* Email not listed. Try again or make an account today!</Text>):<Text/>}
 
           <View style={styles.btnContainer}>
-            <Button color="white" title="Back to login screen" onPress={() => navigation.navigate('Login')} />
-            <Button color="white" title="Get Registered!" onPress={() => navigation.navigate('Signup')} />
+            <Button color="black" title="Back to login screen" onPress={() => navigation.navigate('Login')} />
+            <Button color="black" title="Get Registered!" onPress={() => navigation.navigate('Signup')} />
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -82,28 +82,47 @@ export default ForgotPassword;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#344955"
+    backgroundColor: "white"
   },
   inner: {
     padding: 24,
     flex: 1,
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    marginTop:"50%"
   },
   header: {
     fontSize: 36,
-    fontWeight: "300",
-    marginBottom: 48,
-    color:"white",
+    fontWeight: "600",
+    color: "black",
+    alignSelf:"center",
+    fontSize:60,
+    color:"#e6006b"
   },
   textInput: {
+    fontSize: 16,
+    padding: 6,
     height: 40,
-    color: "white",
-    borderColor: "white",
+    color: "black",
+    borderBottomColor: "#3f3f3f",
+    paddingLeft: 15,
     borderBottomWidth: 1,
-    marginBottom: 50
+    width:"95%",
+    alignSelf:"center",
+    borderRadius:10,
+    marginBottom: 20
   },
   btnContainer: {
     marginTop: 12
+  },
+  picker: { // new
+    width: 325,
+    height: 45,
+    borderColor: 'grey',
+    borderWidth: 1,
+    borderRadius: 15,
+    color: 'white',
+    marginBottom: 20,
+    paddingLeft: 10
   }
 });
 

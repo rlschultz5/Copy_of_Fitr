@@ -99,17 +99,16 @@ const SignupScreen = ({ navigation }) => {
             <View style={styles.inner}>
               <Text style={styles.header}>Become a Workout Partner!</Text>
               <View>
-                <Text style={styles.label}>General Info:</Text>
-                <Text style={styles.label}></Text>
+                <Text style={{height:40}}></Text>
 
-                <TextInput onChangeText={setUsername} value={username} placeholderTextColor="#ffc3b8" placeholder="Username" style={styles.textInput} />
-                <TextInput onChangeText={setPassword} value={password} placeholderTextColor="#ffc3b8" placeholder="Password" style={styles.textInput} />
-                <TextInput onChangeText={setName} value={name} placeholderTextColor="#ffc3b8" placeholder="Name" style={styles.textInput} />
-                <TextInput onChangeText={setEmail} value={email} placeholderTextColor="#ffc3b8" placeholder="Email" style={styles.textInput} />
-                <TextInput onChangeText={setCity} value={city} placeholderTextColor="#ffc3b8" placeholder="City" style={styles.textInput} />
-                <TextInput onChangeText={setState} value={state} placeholderTextColor="#ffc3b8" placeholder="State" style={styles.textInput} />
-                <TextInput onChangeText={setZipCode} value={zipCode} placeholderTextColor="#ffc3b8" placeholder="Zip Code" style={styles.textInput} />
-                <Picker textInputStyle={{color: '#ffc3b8', padding: 5}}
+                <TextInput onChangeText={setUsername} value={username} placeholderTextColor="grey" placeholder="Username" style={styles.textInput} />
+                <TextInput onChangeText={setPassword} value={password} placeholderTextColor="grey" placeholder="Password" style={styles.textInput} />
+                <TextInput onChangeText={setName} value={name} placeholderTextColor="grey" placeholder="Name" style={styles.textInput} />
+                <TextInput onChangeText={setEmail} value={email} placeholderTextColor="grey" placeholder="Email" style={styles.textInput} />
+                <TextInput onChangeText={setCity} value={city} placeholderTextColor="grey" placeholder="City" style={styles.textInput} />
+                <TextInput onChangeText={setState} value={state} placeholderTextColor="grey" placeholder="State" style={styles.textInput} />
+                <TextInput onChangeText={setZipCode} value={zipCode} placeholderTextColor="grey" placeholder="Zip Code" style={styles.textInput} />
+                <Picker textInputStyle={{color: 'grey', padding: 5}}
                   containerStyle={styles.picker}
                   item={schoolYear}
                   items={SCHOOLYEAR}
@@ -121,15 +120,15 @@ const SignupScreen = ({ navigation }) => {
                 />
                 {/* <Text style={styles.label}>Optional:</Text>
                 <Text style={styles.label}></Text>
-                <TextInput onChangeText={setPreferences} value={preferences} placeholderTextColor="#ffc3b8" placeholder="(Preferences Option To Be Implemented)" style={styles.textInput} /> */}
+                <TextInput onChangeText={setPreferences} value={preferences} placeholderTextColor="grey" placeholder="(Preferences Option To Be Implemented)" style={styles.textInput} /> */}
               </View>
 
               {(isError)?(<Text style={{color:"blue"}}>* Sign up Failed. Please fill in all the blanks.</Text>):<Text/>}
 
 
               <View style={styles.btnContainer}>
-                <Button color="white" disabled={disabled} title="Create" onPress={onSubmit} />
-                <Button color="white" title="Already have an account?" onPress={() => navigation.navigate("Login")} />
+                <Button color="black" disabled={disabled} title="Create" onPress={onSubmit} />
+                <Button color="black" title="Already have an account?" onPress={() => navigation.navigate("Login")} />
               </View>
             </View>
           </ScrollView>
@@ -143,53 +142,41 @@ export default SignupScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#344955"
-  },
-  checkboxContainer: {
-    flexDirection: "row",
-    marginBottom: 20,
-  },
-  checkbox: {
-    marginLeft: 100,
-    alignSelf: "center",
-    backgroundColor: "white",
-    borderColor: "white",
-    borderWidth: 4,
-    width: 10,
-    height: 10
-  },
-  label: {
-    marginTop: 8,
-    color: "white",
-    fontWeight: "600"
+    backgroundColor: "white"
   },
   inner: {
-    padding: 24,
+    padding: 25,
     flex: 1,
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+
   },
   header: {
-    fontSize: 36,
-    fontWeight: "300",
-    marginBottom: 48,
-    color: "white",
+    fontSize: 32,
+    fontWeight: "600",
+    color: "black",
+    color:"#e6006b"
   },
   textInput: {
+    fontSize: 16,
     height: 40,
-    color: "white",
-    borderColor: "white",
+    color: "black",
+    borderBottomColor: "#3f3f3f",
     borderBottomWidth: 1,
-    marginBottom: 50
+    width:"95%",
+    alignSelf:"center",
+    marginBottom: 20
   },
   btnContainer: {
     marginTop: 12
   },
   picker: { // new
-    width: 330,
+    width: 325,
     height: 45,
-    borderColor: 'white',
-    borderWidth: 2,
-    backgroundColor: '#344955',
-    color: 'white'
+    borderColor: 'grey',
+    borderWidth: 1,
+    borderRadius: 15,
+    color: 'white',
+    marginBottom: 20,
+    paddingLeft: 10
   }
 });
