@@ -8,7 +8,7 @@ export default function WorkoutList({data, navigation}) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {data.map((workout, index)=>{
-          return <WorkoutCell navigation={navigation} key={index} data={workout}/>
+          if(workout.title) return <WorkoutCell navigation={navigation} key={index} data={workout}/>
       })}
     </ScrollView>
   );

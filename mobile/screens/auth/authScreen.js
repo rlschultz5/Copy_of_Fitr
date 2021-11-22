@@ -59,6 +59,7 @@ const authScreen = ({ navigation }) => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inner}>
+          <View style={{height:"10%"}}/>
           <Text style={styles.header}>Fitr.</Text>
           <View>
             <TextInput placeholderTextColor="grey" style ={styles.textInput} onChangeText={setUsername} value={username} placeholder="Username" style={styles.textInput} />
@@ -89,7 +90,6 @@ const styles = StyleSheet.create({
     padding: 24,
     flex: 1,
     justifyContent: "space-around",
-    marginTop:"50%"
   },
   header: {
     fontSize: 36,
