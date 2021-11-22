@@ -17,9 +17,10 @@ exports.forgotPassword = async (req, res) => {
         if (!doc) {
             res.status(401).send({error: "Username not found"});
         } else {
-            let token = await Token.findOne({ userId: doc._id });
-            if (!token) {
-                token = await new Token({
+
+            let tokenDoc = await Token.findOne({ userId: doc._id });
+            if (!tokenDoc) {
+                tokenDoc = await new Token({
                     userId: doc._id,
                     token: crypto.randomBytes(32).toString("hex"),
                 }).save();
@@ -34,11 +35,12 @@ exports.forgotPassword = async (req, res) => {
             console.log(tempPassword)
             const message = "Here is your temporary password: " + tempPassword;
             const email = doc.email;
+            console.log(tokenDoc);
             if (!email) {
                 res.status(500).send({error: "No email found for user"})
             } else {
                 await sendEmail(doc.email, "Password reset", message);
-                res.send({message: "new temporary password sent to provided email"});
+                res.send({message: "new temporary password sent to provided email", forgotPasswordToken: tokenDoc.token});
             }
         }
     } catch (err) {
@@ -47,21 +49,42 @@ exports.forgotPassword = async (req, res) => {
     }
 }
 
+// temporary reset password method that does not verify user token
+exports.resetPasswordTemp = async (req, res) => {
+    try {
+        if (!req.body.password) {
+            res.status(401).send({error: "No password provided"});
+        }
+        const doc = await User.findById(req.body.userId);
+        if (!doc) {
+            return res.status(401).send({error: "incorrect user id, user not found"});
+        }
+        const password = req.body.password;
+        const newHashedPassword = await bcrypt.hash(password, 10);
+        doc.password = newHashedPassword;
+        await doc.save();
+        res.send({message: "password successfully reset"});
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({message: "An error occurred, check logs"});
+    }
+}
+
 exports.resetPassword = async (req, res) => {
     try {
         if (!req.body.password) {
             res.status(401).send({error: "No password provided"});
         }
-        const doc = await User.findById(req.params.userId);
+        const doc = await User.findById(req.body.userId);
         if (!doc) {
-            return res.status(401).send({error: "invalid/expired link"});
+            return res.status(401).send({error: "incorrect user id, user not found"});
         }
         const token = await Token.findOne({
             userId: doc._id,
-            token: req.params.token
+            token: req.body.token
         });
         if (!token) {
-            return res.status(401).send({error: "invalid/expired link"});
+            return res.status(401).send({error: "invalid token provided, token not found"});
         }
         const password = req.body.password;
         const newHashedPassword = await bcrypt.hash(password, 10);
@@ -72,7 +95,7 @@ exports.resetPassword = async (req, res) => {
         res.send({message: "password successfully reset"});
     } catch (err) {
         console.log(err);
-        res.status(500).send({message: "An error occurred"});
+        res.status(500).send({message: "An error occurred, check logs"});
     }
 
 }
