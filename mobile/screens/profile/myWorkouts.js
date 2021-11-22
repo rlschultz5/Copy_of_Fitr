@@ -1,13 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import WorkoutList from './workoutList';
+import WorkoutList from "../home/workoutList.js";
 import { StyleSheet, Text, View, Pressable, Image, Button } from 'react-native';
-import Filter from './filter';
 import { Ionicons } from '@expo/vector-icons';
 import API from "../../api.js"
 import axios from "axios";
 import AnimatedLoader from "react-native-animated-loader";
 import LottieView from 'lottie-react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 
@@ -27,30 +28,19 @@ const DUMMY = [{
   filled: 3
 }]
 
-export default function HomeScreen({ navigation }) {
+export default function MyWorkouts({ navigation }) {
 
   const [workouts, setWorkouts] = useState({});
-  const [showFilter, setShowFilter] = useState(false);
-  const [filter, setFilter] = useState({});
   const [loading,setLoading] = useState(true);
-  const [refresh, setRefresh] = useState(true);
 
   useEffect(()=>{
+
     const getWorkouts = async () => {
-      setLoading(true);
-      let extractedFilter = {};
-      for(let key in filter) {
-        if(filter[key] instanceof Date) extractedFilter[key] = filter[key]
-        else if(filter[key] !== 'object' && filter[key] === true)  extractedFilter[key] = false;
-        else if( filter[key] && filter[key].value != -1 && filter[key] != "") {
-          extractedFilter[key] = filter[key].label;
-        }
-      }
-      
-      console.log(extractedFilter);
       try{
-      const res = await axios.post(`http://${API}:8080/api/workout/getWorkouts`, {
-        fields:extractedFilter
+        let userData = JSON.parse(await AsyncStorage.getItem("user"));
+
+      const res = await axios.post(`http://${API}:8080/api/user/getCreatedWorkouts`, {
+        user_id: userData._id
       });
       setWorkouts(res.data.data);
       setLoading(false);
@@ -59,7 +49,7 @@ export default function HomeScreen({ navigation }) {
       }
     }
     getWorkouts();
-  },[filter, refresh])
+  },[])
 
 
   return (
@@ -72,36 +62,15 @@ export default function HomeScreen({ navigation }) {
 
         </View>
 
-        <Pressable onPress={() => navigation.navigate("Profile")}>
-          <Ionicons size={30} name="person-circle-outline" />
-        </Pressable>
-
       </View>
 
-      <Pressable style={{backgroundColor:"#004275", justifyContent:"center",height:50, margin:15, marginTop: 25, borderRadius:10}}
-      onPress={()=>{navigation.navigate("Create Workout")}}>
-        <Text style={{color:"white", alignSelf:"center", fontWeight:"500", fontSize:15}}>
-          Create Workout
-        </Text>
-
-      </Pressable>
+    
       <View style={styles.listContainer}>
-        <Text style={styles.title}>Workouts Available: </Text>
-        <Pressable onPress={()=>setRefresh(!refresh)}>
-        <Ionicons style={{flex:1}} name="refresh-outline" size={20}/>
-        </Pressable>
+        <Text style={styles.title}>My Workouts: </Text>
 
       </View>
 
-      <Pressable onPress={() => setShowFilter(true)}>
-        <View style={styles.filterBtn}>
-          <Text style={styles.filterBtnText}>
-            {(filter.activity)?filter.activity.label:"Set Filter"}
-          </Text>
-        </View>
-      </Pressable>
 
-      <Filter visible={showFilter} setVisible={setShowFilter} filter={filter} setFilter={setFilter} />
 
       {(loading)?
   (
@@ -147,11 +116,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    margin:15,
     fontWeight: "600",
-    flex: 10
   },
   listContainer: {
-    padding: 20,
-    flexDirection:"row",
+    padding: 10,
   }
 });

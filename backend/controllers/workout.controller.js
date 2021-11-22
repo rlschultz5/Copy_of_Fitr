@@ -65,8 +65,10 @@ exports.deleteWorkout = async (req, res) => {
 
 exports.createWorkout = async (req, res) => {
     if (!req.body.title || !req.body.activity || !req.body.minPeople || !req.body.experienceLevel || !req.body.length) {
+        // console.log(req.body)
         res.status(500).send({error: "Required fields missing"});
     } else {
+        console.log(req.body)
         try {
             let isFull = (req.body.maxPeople == 1)
             const workoutObj = {
@@ -87,7 +89,7 @@ exports.createWorkout = async (req, res) => {
             const workout = await new Workout(workoutObj).save()
     
             let retrieveUser = await User.findOne({_id: req.body.creator_id})
-            const newWorkoutList = [...retrieveUser.createdWorkouts, workout._id]
+            const newWorkoutList = [...retrieveUser.createdWorkouts, workout]
             let options = {new: true};
             let update = {
               createdWorkouts: newWorkoutList

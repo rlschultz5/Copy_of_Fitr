@@ -32,7 +32,7 @@ const experienceLevels = [
 const lengths = [30, 60, 90, 120, 150, 180];
 
 const createWorkoutObj = async () => {
-    const user = await User.findOne();
+    const user = await User.findOne({username: "Smart-director-94"});
     let workoutData = {
         title: randomTitle({min: 3, max: 9}),
         activity: activities[Math.floor(Math.random() * activities.length)],
@@ -54,14 +54,17 @@ const createWorkoutObj = async () => {
 const addWorkout = async (workoutData) => {
     try {
         const res = await new Workout(workoutData).save();
-        if (!res) console.log("error occurred while saving");
+        const user = await User.findOne({username: "Smart-director-94"});
+        updatedCreatedWorkouts = [...user.createdWorkouts, res];
+        user.createdWorkouts = updatedCreatedWorkouts;
+        await user.save();
     } catch (err) {
         console.log(err)
     }
 }
 
 const run = async () => {
-    for (let i = 0; i < 25; i++) { // loop condition can be edited to add as many elements as desired
+    for (let i = 0; i < 1; i++) { // loop condition can be edited to add as many elements as desired
         const workout = await createWorkoutObj();
         //console.log(workout);
         await addWorkout(workout);

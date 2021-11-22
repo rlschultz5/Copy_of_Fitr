@@ -136,7 +136,11 @@ exports.getAttendingWorkouts = async (req, res) => {
 
   try {
     let result = await User.findOne({_id: req.body.user_id})
-    console.log(result)
+    let workouts = result.attendingWorkouts; 
+    const newWorkouts = workouts.filter(workout => (workout.date >= new Date()));
+    console.log(newWorkouts);
+    result.attendingWorkouts = newWorkouts;
+    await result.save();
     res.send({data: result.attendingWorkouts})
   } catch (err) {
     console.log(err)
@@ -151,9 +155,9 @@ exports.joinWorkout = async (req, res) => {
 
   try{
     let retrieveUser = await User.findOne({_id: req.body.user_id})
-    console.log(req.body);
     let retrieveWorkout = await Workout.findOne({_id: req.body.workout_id})
-    const newWorkoutList = [...retrieveUser.attendingWorkouts, req.body.workout_id]
+    console.log(retrieveWorkout);
+    const newWorkoutList = [...retrieveUser.attendingWorkouts, retrieveWorkout]
     const newMemberList = [...retrieveWorkout.membersAttending, req.body.user_id]
 
     let updateWorkout = {
@@ -166,10 +170,14 @@ exports.joinWorkout = async (req, res) => {
 
     let foundUser = await User.findOneAndUpdate({_id: req.body.user_id}, updateUser, options);
     let foundWorkout = await Workout.findOneAndUpdate({_id: req.body.workout_id}, updateWorkout, options);
-
-    console.log(foundUser)
-    console.log(foundWorkout)
-    res.status(200).send({message: "User has joined workout!"})
+    if (!foundUser) {
+        res.status(500).send({error: "No user found"});
+    }
+    else if (!foundWorkout) {
+        res.status(500).send({error: "No worjout found"}); 
+    } else {
+        res.status(200).send({message: "User has joined workout!"})
+    }
   } catch (err) {
     console.log(err)
     res.status(500).send({message: err})
