@@ -88,7 +88,6 @@ const CreateWorkout = ({ navigation }) => {
   const setLoggedIn = React.useContext(AuthContext);
 
   const onSubmit = async () => {
-    setLoading(true);
 
     try {
       let userData = JSON.parse(await AsyncStorage.getItem('user'));
@@ -110,6 +109,8 @@ const CreateWorkout = ({ navigation }) => {
         setError(true);
         return;
       }
+      setLoading(true);
+
       const res = await axios.post(`http://${API}:8080/api/workout/create`,
         {
           title: title,
@@ -144,7 +145,6 @@ const CreateWorkout = ({ navigation }) => {
     setLoading(false);
     setDisabled(true);
     setSuccess(true);
-    setTimeout(()=>{navigation.navigate("Main")}, 3000)
 
   }
   if(success===true) return (
@@ -266,7 +266,7 @@ const CreateWorkout = ({ navigation }) => {
 
       </Pressable>
             </View>
-            {(isError) ? (<Text style={{ color: "white" }}>* Unsuccessful. Make sure all fields are filled out and try again.</Text>) : <Text />}
+            {(isError) ? (<Text style={{ color: "red" }}>* Unsuccessful. Make sure all fields are filled out and try again.</Text>) : <Text />}
 
           </View>
         </ScrollView>
