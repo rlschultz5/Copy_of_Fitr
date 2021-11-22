@@ -90,7 +90,7 @@ exports.createWorkout = async (req, res) => {
             const workout = await new Workout(workoutObj).save()
     
             let retrieveUser = await User.findOne({_id: req.body.creator_id})
-            const newWorkoutList = [...retrieveUser.createdWorkouts, workout._id]
+            const newWorkoutList = [...retrieveUser.createdWorkouts, workout]
             let options = {new: true};
             let update = {
               createdWorkouts: newWorkoutList
