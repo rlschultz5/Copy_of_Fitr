@@ -49,4 +49,6 @@ You will then be lead to the Expo app and you App should be running.
 
 ## Test
 Make sure that Jest is installed (should be installed when npm install).\
-`npm test`
+`npm test` in the mobile folder to run client tests
+`npm test` in the backend folder to run server tests
+`npm test -- --coverage` to generate code coverage report for the backend
