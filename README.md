@@ -1,5 +1,3 @@
-# Copy_of_Fitr
-
 # Fitr Iteration 1
 
 Fitr is an IOS application developed using the MERN stack. Evidently, this repo is divided into two different sub-repos: 'backend' and 'mobile'.
